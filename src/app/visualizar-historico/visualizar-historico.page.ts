@@ -24,6 +24,8 @@ export class VisualizarHistoricoPage implements OnInit {
   lineChart: any;
   pacientes: Paciente[] = [];
   lancamentos: Dados[] = [];
+  listaResultadosComparativos: number[] = [];
+  listaResultadosIntervencao: number[] = [];
 
   constructor(
     private dataLancamentoService: DataLancamentoService,
@@ -39,17 +41,31 @@ export class VisualizarHistoricoPage implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
+  /*ngAfterViewInit() {
     this.lineChartMethod();
-  }
+  }*/
 
   ngOnInit() {
   }
 
   listarLancamentos(id){
     this.dataLancamentoService.getLancamentosByIdPaciente(id).subscribe(res => {
-     this.lancamentos = res;
-     this.cd.detectChanges();
+      this.lancamentos = res;
+      this.cd.detectChanges();
+
+      var i = 0;
+      for (let l of this.lancamentos) {
+        this.listaResultadosComparativos[i] = l.resultadoComparativo;
+        i++;
+      }
+
+      var j = 0;
+      for (let l of this.lancamentos) {
+        this.listaResultadosIntervencao[j] = l.resultadoIntervencao;
+        j++;
+      }
+
+      this.lineChartMethod();
    });
   }
 
@@ -89,7 +105,7 @@ export class VisualizarHistoricoPage implements OnInit {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [2.2, -1.09, -3.5, -0.01, 0.000988],
+            data: this.listaResultadosComparativos,
             spanGaps: false,
           },
           {
@@ -111,7 +127,7 @@ export class VisualizarHistoricoPage implements OnInit {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [-1.1, -2.09, 1.99999, 2.4, 1.0007766],
+            data: this.listaResultadosIntervencao,
             spanGaps: false,
           }
         ]
