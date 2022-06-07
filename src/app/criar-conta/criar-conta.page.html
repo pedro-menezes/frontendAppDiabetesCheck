@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <!--<ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>-->
+    <ion-title>Criar conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nome:*</ion-label>
+      <ion-input name="nome" [(ngModel)]="nome" type="text"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Coren:*</ion-label>
+      <ion-input name="coren" [(ngModel)]="coren" type="text"> </ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button type="submit" expand="block" color="success" (click)="addAcount()">Criar conta</ion-button>
+  <ion-button type="button" expand="block" color="danger"  [routerLink]="['/login']" routerDirection="forward"> Cancelar </ion-button>
+</ion-content>

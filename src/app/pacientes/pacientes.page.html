@@ -1,0 +1,18 @@
+<ion-content>
+  <div style="margin-top: 50px;"></div>
+  <ion-list>
+    <h3 style="text-align: center;">Pacientes</h3>
+    <div style="margin-top: 30px;"></div>
+    <ion-item *ngFor="let paciente of pacientes" (click)="openPaciente(paciente)">
+      <ion-label>
+        {{ paciente.nome }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+ 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addPaciente()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

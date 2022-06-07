@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Detalhes</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <div *ngIf="paciente">
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input [(ngModel)]="paciente.nome"></ion-input>
+    </ion-item>
+ 
+    <ion-item>
+      <ion-label position="stacked">Coren</ion-label>
+      <ion-input [(ngModel)]="paciente.coren"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Data de nascimento</ion-label>
+      <ion-textarea [(ngModel)]="paciente.dataNascimento"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Telefone</ion-label>
+      <ion-textarea [(ngModel)]="paciente.telefone"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-textarea [(ngModel)]="paciente.email"></ion-textarea>
+    </ion-item>
+
+  </div>
+ 
+  <ion-button expand="block" color="success" (click)="atualizarPaciente()">
+    <ion-icon name="save" slot="start"></ion-icon>
+    Atualizar
+  </ion-button>
+  <ion-button expand="block" color="danger" (click)="deletarPaciente()">
+    <ion-icon name="trash" slot="start"></ion-icon>
+    Excluir
+  </ion-button>
+ 
+</ion-content>

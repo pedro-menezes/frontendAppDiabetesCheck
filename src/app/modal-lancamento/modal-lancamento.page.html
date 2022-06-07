@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+   
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-list>
+
+    <div *ngIf="lancamento">
+      <ion-item>
+        <ion-label position="stacked">Data:</ion-label>
+        <ion-input name="data" [(ngModel)]="lancamento.data" type="text" disabled="true"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Coren:*</ion-label>
+        <ion-input name="coren" [(ngModel)]="lancamento.coren" type="text"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Idade:*</ion-label>
+        <ion-range min="0" max="120" [pin]="true" [(ngModel)]="lancamento.idade"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Altura:*</ion-label>
+        <ion-range min="0" max="230" [pin]="true" [(ngModel)]="lancamento.altura"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Peso:*</ion-label>
+        <ion-range min="0" max="200" [pin]="true" [(ngModel)]="lancamento.peso"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Triglicerídeos:*</ion-label>
+        <ion-range min="-174" max="711" [pin]="true" [(ngModel)]="lancamento.triglicerideos"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Tempo Evolutivo:*</ion-label>
+        <ion-range min="-15.2" max="46.4" [pin]="true" [(ngModel)]="lancamento.tempoEvolutivo"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Circunferência Abdominal:*</ion-label>
+        <ion-range min="45" max="153" [pin]="true" [(ngModel)]="lancamento.circunferenciaAbdominal"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Renda:*</ion-label>
+        <ion-range min="-400" max="1200" [pin]="true" [(ngModel)]="lancamento.renda"></ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Escolaridade:*</ion-label>
+        <ion-range min="-7.5" max="22.5" [pin]="true" [(ngModel)]="lancamento.escolaridade"></ion-range>
+      </ion-item>
+    </div>
+    </ion-list>
+
+  <br>
+  
+  <ion-button expand="block" color="success" (click)="atualizarLancamento()">
+    <ion-icon name="save" slot="start"></ion-icon>
+    Atualizar
+  </ion-button>
+  <ion-button expand="block" color="danger" (click)="deletarLancamento()">
+    <ion-icon name="trash" slot="start"></ion-icon>
+    Excluir
+  </ion-button>
+
+</ion-content>

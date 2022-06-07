@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <table> 
+    <tr style="height: 150px;">
+      <td>
+        <div class="titulo">DiabetesCheck</div>
+      </td>
+    </tr>
+
+    <tr style="height: 90px;">
+      <td>
+        <div class="descricao"> Um app para você <br> 
+          verificar seu risco de diabetes
+        </div>
+      </td>
+    </tr>
+
+    <tr style="height: 150px;">
+      <td>
+        <div class="botaoIniciar">
+          <ion-button color="tertiary" size="large" [routerLink]="['/login']" routerDirection="forward">INICIAR</ion-button>
+        </div>
+      </td>
+    </tr>
+
+    <tr style="height: 250px;">
+      <td>
+        <div class="descricao2">
+          Bem vindo ao aplicativo  DiabetesCheck! 
+          Ao informar seus dados você poderá 
+          verificar seu risco de ter diabetes.
+          São eles: idade, altura, 
+          peso, triglicerídeos, tempo evolutivo,
+          circunferência abdominal, renda e
+          escolaridade. Responder com sinceridade  
+          a todos os itens é fundamental para 
+          receber um resultado correto.
+        </div>
+      </td>
+    </tr>
+
+    <tr style="height: 220px;">
+      <td>
+      </td>
+    </tr>
+
+    <tr style="height: 20px;">
+      <td>
+        <div class="botaoInfo">
+          <ion-router-link (click)="maisInfo()" style="color: rgb(19, 10, 134);">Mais informações</ion-router-link>
+        </div>
+      </td>
+    </tr>
+  </table>
+</ion-content>

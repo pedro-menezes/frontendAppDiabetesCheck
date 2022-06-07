@@ -1,0 +1,11 @@
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Digite seu email cadastrado no sistema:*</ion-label>
+      <ion-input name="email" [(ngModel)]="email" type="text"> </ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button type="submit" expand="block" color="success" (click)="alterarSenha()">Alterar senha</ion-button>
+  <ion-button type="button" expand="block" color="danger"  [routerLink]="['/login']" routerDirection="forward"> Cancel </ion-button>
+</ion-content>
