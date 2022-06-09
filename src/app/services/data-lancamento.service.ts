@@ -50,7 +50,7 @@ export class DataLancamentoService {
   }
 
   getLancamentosByIdPaciente(id): Observable<Dados[]> {
-    const lancamentoDocRef = query(collection(this.firestore, 'lancamentos'), where("idPaciente", "==", id));
+    const lancamentoDocRef = query(collection(this.firestore, 'lancamentos'), where("idPaciente", "==", id), orderBy("data", "desc"));
     return collectionData(lancamentoDocRef,  { idField: 'id'}) as Observable<Dados[]>;
   }
  

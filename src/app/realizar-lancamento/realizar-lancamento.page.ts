@@ -3,7 +3,15 @@ import { DataLancamentoService, Dados } from '../services/data-lancamento.servic
 import { DataPacienteService, Paciente } from '../services/data-paciente.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
+//Importação do primeiro exemplo
+import { firestore } from 'firebase/app';
+
+//Importações do segundo exemplo
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+
+import { Observable, combineLatestWith} from 'rxjs';
 
 @Component({
   selector: 'app-realizar-lancamento',
@@ -62,6 +70,14 @@ export class RealizarLancamentoPage implements OnInit {
   }
 
   ngOnInit() {
+
+    //Primeiro exemplo
+    var x = firestore.FieldValue.serverTimestamp();
+
+    //Segundo exemplo
+    var dataServidor = firebase.firestore.FieldValue.serverTimestamp();
+
+    //Formatação da data do computador
     var dataAtual = new Date();
     var dia = dataAtual.getDate();
     var mes =  parseInt(dataAtual.getMonth().toString()) + 1;
@@ -84,10 +100,34 @@ export class RealizarLancamentoPage implements OnInit {
         circunferenciaAbdominal: this.circunferenciaAbdominal,
         renda: this.renda,
         escolaridade: this.escolaridade,
-        resultadoIntervencao: 0,
-        resultadoComparativo: 0
+        resultadoIntervencao: this.resultadoIntervencao,
+        resultadoComparativo: this.resultadoComparativo
       }
-      
+
+      //ForkJoin
+      Observable.forkJoin(
+        this.DataLancamentoService.calcularInterventionGroup(this.dados),
+        this.DataLancamentoService.calcularComparativeGroup(this.dados)
+      ).subscribe((([resultIntervention, resultComparative]: [number, number]) => {
+          this.dados.resultadoIntervencao = resultIntervention;
+          this.dados.resultadoComparativo = resultComparative;
+      }));
+
+
+      //CombineLatesWith
+      const name$ = this.DataLancamentoService.calcularInterventionGroup(this.dados)
+      const document$ = this.DataLancamentoService.calcularComparativeGroup(this.dados)
+    
+      name$.pipe(
+              combineLatestWith(document$)
+            )
+            .subscribe(([name, document]) => {
+                this.dados.resultadoIntervencao = name;
+                this.resultadoComparativo = pair.document;
+                //this.showForm();
+            })
+
+      /*
       this.DataLancamentoService.calcularInterventionGroup(this.dados).subscribe(result =>
         this.showAlert("Seu risco comparativo é: " + result)
       );
@@ -95,6 +135,7 @@ export class RealizarLancamentoPage implements OnInit {
       this.DataLancamentoService.calcularComparativeGroup(this.dados).subscribe(result =>
         this.showAlert("Seu risco comparativo é: " + result)
       );
+      */
   
       this.DataLancamentoService.addLancamento(this.dados);
       this.router.navigateByUrl('/home/resultado', { replaceUrl: true });
@@ -141,34 +182,22 @@ export class RealizarLancamentoPage implements OnInit {
   buscarUltimoLancamento(paciente){
     this.DataLancamentoService.getLancamentosByIdPaciente(paciente).subscribe(res => {
       this.listaDadosPaciente = res;
+      
+      this.dadosPaciente = this.listaDadosPaciente[0];
 
-      var dataAtual = new Date();
-      var dia = dataAtual.getDate();
-      var mes =  parseInt(dataAtual.getMonth().toString()) + 1;
-      var ano = dataAtual.getFullYear();
-      var data = dia + "/" + mes + "/" + ano;
-
-      for (let x of this.listaDadosPaciente) {
-        var result;
-        if (x.data == data) {
-          result = x;
-        }
-
-        this.dadosPaciente = result;
-        this.data = result.data;
-        this.idPaciente = result.idPaciente;
-        this.coren = result.coren;
-        this.idade = result.idade;
-        this.altura = result.altura;
-        this.peso = result.peso;
-        this.triglicerideos = result.triglicerideos;
-        this.tempoEvolutivo = result.tempoEvolutivo;
-        this.circunferenciaAbdominal = result.circunferenciaAbdominal;
-        this.renda = result.renda;
-        this.escolaridade = result.escolaridade;
-        this.resultadoIntervencao = result.resultadoIntervencao;
-        this.resultadoComparativo = result.resultadoComparativo;
-      }
+      this.data = this.dadosPaciente.data;
+      this.idPaciente = this.dadosPaciente.idPaciente;
+      this.coren = this.dadosPaciente.coren;
+      this.idade = this.dadosPaciente.idade;
+      this.altura = this.dadosPaciente.altura;
+      this.peso = this.dadosPaciente.peso;
+      this.triglicerideos = this.dadosPaciente.triglicerideos;
+      this.tempoEvolutivo = this.dadosPaciente.tempoEvolutivo;
+      this.circunferenciaAbdominal = this.dadosPaciente.circunferenciaAbdominal;
+      this.renda = this.dadosPaciente.renda;
+      this.escolaridade = this.dadosPaciente.escolaridade;
+      this.resultadoIntervencao = this.dadosPaciente.resultadoIntervencao;
+      this.resultadoComparativo = this.dadosPaciente.resultadoComparativo;
 
       this.cd.detectChanges();
     });
