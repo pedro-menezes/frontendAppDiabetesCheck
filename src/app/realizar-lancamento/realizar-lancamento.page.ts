@@ -4,14 +4,7 @@ import { DataPacienteService, Paciente } from '../services/data-paciente.service
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-//Importação do primeiro exemplo
-import { firestore } from 'firebase/app';
-
-//Importações do segundo exemplo
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
-
-import { Observable, combineLatestWith} from 'rxjs';
+import  firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-realizar-lancamento',
@@ -71,11 +64,8 @@ export class RealizarLancamentoPage implements OnInit {
 
   ngOnInit() {
 
-    //Primeiro exemplo
-    var x = firestore.FieldValue.serverTimestamp();
-
-    //Segundo exemplo
-    var dataServidor = firebase.firestore.FieldValue.serverTimestamp();
+    var x = firebase.firestore.FieldValue.serverTimestamp();
+    console.log(x);
 
     //Formatação da data do computador
     var dataAtual = new Date();
@@ -104,7 +94,7 @@ export class RealizarLancamentoPage implements OnInit {
         resultadoComparativo: this.resultadoComparativo
       }
 
-      //ForkJoin
+      /*//ForkJoin
       Observable.forkJoin(
         this.DataLancamentoService.calcularInterventionGroup(this.dados),
         this.DataLancamentoService.calcularComparativeGroup(this.dados)
@@ -117,7 +107,7 @@ export class RealizarLancamentoPage implements OnInit {
       //CombineLatesWith
       const name$ = this.DataLancamentoService.calcularInterventionGroup(this.dados)
       const document$ = this.DataLancamentoService.calcularComparativeGroup(this.dados)
-    
+    /*
       name$.pipe(
               combineLatestWith(document$)
             )
@@ -127,7 +117,8 @@ export class RealizarLancamentoPage implements OnInit {
                 //this.showForm();
             })
 
-      /*
+      */
+
       this.DataLancamentoService.calcularInterventionGroup(this.dados).subscribe(result =>
         this.showAlert("Seu risco comparativo é: " + result)
       );
@@ -135,8 +126,7 @@ export class RealizarLancamentoPage implements OnInit {
       this.DataLancamentoService.calcularComparativeGroup(this.dados).subscribe(result =>
         this.showAlert("Seu risco comparativo é: " + result)
       );
-      */
-  
+    
       this.DataLancamentoService.addLancamento(this.dados);
       this.router.navigateByUrl('/home/resultado', { replaceUrl: true });
       
