@@ -17,7 +17,7 @@
     </ion-item>
     <ion-item *ngFor="let lancamento of lancamentos" (click)="openLancamento(lancamento)">
       <ion-label>
-        {{ lancamento.data }} 
+        {{ lancamento.data.seconds * 1000 | date:'dd/MM/yyyy HH:mm:ss' }} 
       </ion-label>
     </ion-item>
   </ion-list>

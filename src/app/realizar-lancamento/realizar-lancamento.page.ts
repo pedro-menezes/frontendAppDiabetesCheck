@@ -4,8 +4,6 @@ import { DataPacienteService, Paciente } from '../services/data-paciente.service
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import  firebase from 'firebase/compat/app';
-
 @Component({
   selector: 'app-realizar-lancamento',
   templateUrl: './realizar-lancamento.page.html',
@@ -35,11 +33,11 @@ export class RealizarLancamentoPage implements OnInit {
     idade: 0,
     altura:  0,
     peso:  0,
-    triglicerideos: 0,
-    tempoEvolutivo: 0,
-    circunferenciaAbdominal: 0,
-    renda: 0,
-    escolaridade: 0,
+    triglicerideos: -174,
+    tempoEvolutivo: -15,
+    circunferenciaAbdominal: 45,
+    renda: -400,
+    escolaridade: -8,
     resultadoIntervencao: 0,
     resultadoComparativo: 0
   };
@@ -63,21 +61,11 @@ export class RealizarLancamentoPage implements OnInit {
   }
 
   ngOnInit() {
-
-    var x = firebase.firestore.FieldValue.serverTimestamp();
-    console.log(x);
-
-    //Formatação da data do computador
-    var dataAtual = new Date();
-    var dia = dataAtual.getDate();
-    var mes =  parseInt(dataAtual.getMonth().toString()) + 1;
-    var ano = dataAtual.getFullYear();
-    this.data = dia + "/" + mes + "/" + ano;
+    this.limparDados();
   }
 
   async calcularDiabetes() {
     if(await this.validarDados()){
-
       this.dados = { 
         data: this.data,
         idPaciente : this.paciente,
@@ -90,11 +78,11 @@ export class RealizarLancamentoPage implements OnInit {
         circunferenciaAbdominal: this.circunferenciaAbdominal,
         renda: this.renda,
         escolaridade: this.escolaridade,
-        resultadoIntervencao: this.resultadoIntervencao,
-        resultadoComparativo: this.resultadoComparativo
+        resultadoIntervencao: 0,
+        resultadoComparativo: 0
       }
 
-      /*//ForkJoin
+    /*//ForkJoin
       Observable.forkJoin(
         this.DataLancamentoService.calcularInterventionGroup(this.dados),
         this.DataLancamentoService.calcularComparativeGroup(this.dados)
@@ -103,11 +91,10 @@ export class RealizarLancamentoPage implements OnInit {
           this.dados.resultadoComparativo = resultComparative;
       }));
 
-
-      //CombineLatesWith
+    //CombineLatesWith
       const name$ = this.DataLancamentoService.calcularInterventionGroup(this.dados)
       const document$ = this.DataLancamentoService.calcularComparativeGroup(this.dados)
-    /*
+ 
       name$.pipe(
               combineLatestWith(document$)
             )
@@ -115,9 +102,8 @@ export class RealizarLancamentoPage implements OnInit {
                 this.dados.resultadoIntervencao = name;
                 this.resultadoComparativo = pair.document;
                 //this.showForm();
-            })
-
-      */
+            }) */
+      
 
       this.DataLancamentoService.calcularInterventionGroup(this.dados).subscribe(result =>
         this.showAlert("Seu risco comparativo é: " + result)
@@ -129,7 +115,6 @@ export class RealizarLancamentoPage implements OnInit {
     
       this.DataLancamentoService.addLancamento(this.dados);
       this.router.navigateByUrl('/home/resultado', { replaceUrl: true });
-      
     }
   }
   
@@ -171,28 +156,66 @@ export class RealizarLancamentoPage implements OnInit {
 
   buscarUltimoLancamento(paciente){
     this.DataLancamentoService.getLancamentosByIdPaciente(paciente).subscribe(res => {
-      this.listaDadosPaciente = res;
-      
-      this.dadosPaciente = this.listaDadosPaciente[0];
+ 
+      if(res.length > 0){
+        this.listaDadosPaciente = res;
+        
+        this.dadosPaciente = this.listaDadosPaciente[0];
 
-      this.data = this.dadosPaciente.data;
-      this.idPaciente = this.dadosPaciente.idPaciente;
-      this.coren = this.dadosPaciente.coren;
-      this.idade = this.dadosPaciente.idade;
-      this.altura = this.dadosPaciente.altura;
-      this.peso = this.dadosPaciente.peso;
-      this.triglicerideos = this.dadosPaciente.triglicerideos;
-      this.tempoEvolutivo = this.dadosPaciente.tempoEvolutivo;
-      this.circunferenciaAbdominal = this.dadosPaciente.circunferenciaAbdominal;
-      this.renda = this.dadosPaciente.renda;
-      this.escolaridade = this.dadosPaciente.escolaridade;
-      this.resultadoIntervencao = this.dadosPaciente.resultadoIntervencao;
-      this.resultadoComparativo = this.dadosPaciente.resultadoComparativo;
+        this.data = this.dadosPaciente.data;
+        this.idPaciente = this.dadosPaciente.idPaciente;
+        this.coren = this.dadosPaciente.coren;
+        this.idade = this.dadosPaciente.idade;
+        this.altura = this.dadosPaciente.altura;
+        this.peso = this.dadosPaciente.peso;
+        this.triglicerideos = this.dadosPaciente.triglicerideos;
+        this.tempoEvolutivo = this.dadosPaciente.tempoEvolutivo;
+        this.circunferenciaAbdominal = this.dadosPaciente.circunferenciaAbdominal;
+        this.renda = this.dadosPaciente.renda;
+        this.escolaridade = this.dadosPaciente.escolaridade;
+        this.resultadoIntervencao = this.dadosPaciente.resultadoIntervencao;
+        this.resultadoComparativo = this.dadosPaciente.resultadoComparativo;
 
-      this.cd.detectChanges();
+        this.cd.detectChanges();
+
+      } else{
+        this.dadosPaciente = {
+          data : "",
+          idPaciente: "",
+          coren: "",
+          idade: 0,
+          altura:  0,
+          peso:  0,
+          triglicerideos: 0,
+          tempoEvolutivo: 0,
+          circunferenciaAbdominal: 0,
+          renda: 0,
+          escolaridade: 0,
+          resultadoIntervencao: 0,
+          resultadoComparativo: 0
+        }
+
+       this.limparDados();
+      }
     });
   }
 
+  limparDados(){
+    this.data = "";
+    this.idPaciente = "";
+    this.coren = "";
+    this.idade = 0;
+    this.altura = 0;
+    this.peso = 0;
+    this.triglicerideos = -174;
+    this.tempoEvolutivo = -15;
+    this.circunferenciaAbdominal = 45;
+    this.renda = -400;
+    this.escolaridade = -8;
+    this.resultadoIntervencao = 0;
+    this.resultadoComparativo = 0;
+  }
+  
   async showAlert(message) {
     const alert = await this.alertController.create({
       message,

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Firestore, collection, query, collectionData, doc, setDoc, docData, addDoc, deleteDoc, updateDoc, orderBy, where } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Firestore, collection, query, collectionData, doc, docData, addDoc, serverTimestamp, deleteDoc, updateDoc, orderBy, where, FieldValue } from '@angular/fire/firestore';
+import {Timestamp } from 'firebase/firestore';
 import { Auth } from '@angular/fire/auth';
-import { Storage } from '@angular/fire/storage';
-import { first } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 export interface Dados {
   id?: string;
@@ -56,7 +55,13 @@ export class DataLancamentoService {
  
   addLancamento(lancamento: Dados) {
     const lancamentoRef = collection(this.firestore, 'lancamentos');
-    return addDoc(lancamentoRef, lancamento);
+    return addDoc(lancamentoRef, { coren: lancamento.coren, idPaciente: lancamento.idPaciente,
+      idade: lancamento.idade, altura: lancamento.altura, peso: lancamento.peso, triglicerideos: 
+      lancamento.triglicerideos, tempoEvolutivo: lancamento.tempoEvolutivo, circunferenciaAbdominal:
+      lancamento.circunferenciaAbdominal, renda: lancamento.renda, escolaridade: lancamento.escolaridade,
+      resultadoIntervencao: lancamento.resultadoIntervencao, resultadoComparativo: 
+      lancamento.resultadoComparativo, data: serverTimestamp() }
+    );
   }
 
   deleteLancamento(lancamento: Dados) {
@@ -70,7 +75,8 @@ export class DataLancamentoService {
       idade: lancamento.idade, altura: lancamento.altura, peso: lancamento.peso, triglicerideos: 
       lancamento.triglicerideos, tempoEvolutivo: lancamento.tempoEvolutivo, circunferenciaAbdominal:
       lancamento.circunferenciaAbdominal, renda: lancamento.renda, escolaridade: lancamento.escolaridade,
-      resultadoIntervencao: lancamento.resultadoIntervencao, resultadoComparativo: lancamento.resultadoComparativo
+      resultadoIntervencao: lancamento.resultadoIntervencao, resultadoComparativo: lancamento.resultadoComparativo,
+      data: serverTimestamp()
     });
   }
 }

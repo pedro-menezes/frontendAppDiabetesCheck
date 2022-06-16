@@ -4,7 +4,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataLancamentoService, Dados} from '../services/data-lancamento.service';
 import { ModalLancamentoPage } from '../modal-lancamento/modal-lancamento.page';
-import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { ElementRef, ViewChild } from '@angular/core';
 import { Chart, LinearScale, BarController, CategoryScale, BarElement, DoughnutController, ArcElement, LineController,
   PointElement, LineElement,
 } from 'chart.js';
@@ -20,7 +20,7 @@ Chart.register( LinearScale, BarController, CategoryScale, BarElement, DoughnutC
 export class VisualizarHistoricoPage implements OnInit {
 
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
-
+  paciente: "";
   lineChart: any;
   pacientes: Paciente[] = [];
   lancamentos: Dados[] = [];
@@ -40,10 +40,6 @@ export class VisualizarHistoricoPage implements OnInit {
       this.cd.detectChanges();
     });
   }
-
-  /*ngAfterViewInit() {
-    this.lineChartMethod();
-  }*/
 
   ngOnInit() {
   }
