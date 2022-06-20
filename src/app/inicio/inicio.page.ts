@@ -17,8 +17,8 @@ export class InicioPage implements OnInit {
 
   async maisInfo(){
     const alert = await this.alertCtrl.create({
-      header: 'Mais informações',
-      message: "Este app foi desenvolvido por Isabela Jesus",
+      header: 'More information',
+      message: "This app was developed by Isabela Jesus",
       buttons: ['OK']
     });
     await alert.present();

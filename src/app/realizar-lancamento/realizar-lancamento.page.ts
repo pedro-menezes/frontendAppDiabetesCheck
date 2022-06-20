@@ -98,35 +98,35 @@ export class RealizarLancamentoPage implements OnInit {
   }
   
   validarDados() : boolean{
-    if(this.paciente === ""){
-      this.showAlert("Preencha o campo Paciente!");
+    if(this.paciente == ""){
+      this.showAlert("Fill in the field 'Patient'!");
       return false;
-    }else if (typeof this.coren === "undefined"){
-      this.showAlert("Preencha o campo Coren!");
+    }else if (this.coren == ""){
+      this.showAlert("Fill in the field 'Coren'!");
       return false;
-    }else if(typeof this.idade === "undefined"){
-      this.showAlert("Preencha o campo Idade!");
+    }else if(this.idade == 0){
+      this.showAlert("Fill in the field 'Age'!");
       return false;
-    }else if (typeof this.altura === "undefined"){
-      this.showAlert("Preencha o campo Altura!");
+    }else if (this.altura == 0){
+      this.showAlert("Fill in the field 'Height'!");
       return false;
-    }else if (typeof this.peso === "undefined"){
-      this.showAlert("Preencha o campo Peso!");
+    }else if (this.peso == 0){
+      this.showAlert("Fill in the field 'Weight'!");
       return false;
-    }else if (typeof this.triglicerideos === "undefined"){
-      this.showAlert("Preencha o campo Triglicerideos!");
+    }else if (this.triglicerideos == -174){
+      this.showAlert("Fill in the field 'Triglycerides'!");
       return false;
-    }else if (typeof this.tempoEvolutivo === "undefined"){
-      this.showAlert("Preencha o campo Tempo Evolutivo!");
+    }else if (this.tempoEvolutivo == -15){
+      this.showAlert("Fill in the field 'Evolutionary time'!");
       return false;
-    }else if (typeof this.circunferenciaAbdominal === "undefined"){
-      this.showAlert("Preencha o campo Circunferência Abdominal!");
+    }else if (this.circunferenciaAbdominal == 45){
+      this.showAlert("Fill in the field 'Abdominal circumference'!");
       return false;
-    }else if (typeof this.renda === "undefined"){
-      this.showAlert("Preencha o campo Renda!");
+    }else if (this.renda == -400){
+      this.showAlert("Fill in the field 'Income'!");
       return false;
-    }else if (typeof this.escolaridade === "undefined"){
-      this.showAlert("Preencha o campo Escolaridade!");
+    }else if (this.escolaridade == -8){
+      this.showAlert("Fill in the field 'Schooling'!");
       return false;
     }
     

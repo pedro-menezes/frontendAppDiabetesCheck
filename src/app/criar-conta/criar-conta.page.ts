@@ -36,10 +36,10 @@ export class CriarContaPage implements OnInit {
 
   validarDados(): boolean {
     if(this.nome == ""){
-      this.showAlert("Preencha o campo nome!");
+      this.showAlert("Fill in the field 'name'!");
       return false;
     }else if(this.coren == ""){
-      this.showAlert("Preencha o campo coren!");
+      this.showAlert("Fill in the field 'coren'!");
         return false;
     }
     return true;
@@ -48,7 +48,7 @@ export class CriarContaPage implements OnInit {
   async addAcount(){
     if(await this.validarDados()){
       this.dataServicePessoa.addDados(this.nome, this.coren, this.tipoPerfil);
-      this.showAlert("Conta criada com sucesso!");
+      this.showAlert("Account created successfully!");
       this.router.navigateByUrl('/login', { replaceUrl: true });
     }
   }

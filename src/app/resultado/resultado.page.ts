@@ -41,7 +41,7 @@ export class ResultadoPage implements AfterViewInit, OnInit  {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['Intervenção', 'Comparativo'],
+        labels: ['Intervention', 'Comparative'],
         datasets: [{
           label: '# of Votes',
           data: [this.resultadoIntervencao, this.resultadoComparativo],

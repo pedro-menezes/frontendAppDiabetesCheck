@@ -11,45 +11,40 @@
 
     <tr style="height: 90px;">
       <td>
-        <div class="descricao"> Um app para você <br> 
-          verificar seu risco de diabetes
+        <div class="descricao"> An app for you <br>
+           to check your diabetes risk <br> 
+        </div>
+      </td>
+    </tr>
+
+    <tr style="height: 110px;">
+      <td>
+        <div class="botaoIniciar">
+          <ion-button color="tertiary" size="large" [routerLink]="['/login']" routerDirection="forward">START</ion-button>
         </div>
       </td>
     </tr>
 
     <tr style="height: 150px;">
       <td>
-        <div class="botaoIniciar">
-          <ion-button color="tertiary" size="large" [routerLink]="['/login']" routerDirection="forward">INICIAR</ion-button>
-        </div>
-      </td>
-    </tr>
-
-    <tr style="height: 250px;">
-      <td>
         <div class="descricao2">
-          Bem vindo ao aplicativo  DiabetesCheck! 
-          Ao informar seus dados você poderá 
-          verificar seu risco de ter diabetes.
-          São eles: idade, altura, 
-          peso, triglicerídeos, tempo evolutivo,
-          circunferência abdominal, renda e
-          escolaridade. Responder com sinceridade  
-          a todos os itens é fundamental para 
-          receber um resultado correto.
+          Welcome to the DiabetesCheck app! By entering your data you will be able to check your 
+          risk of having diabetes. They are: age, weight, triglycerides, evolutionary time, 
+          abdominal firmness, income and education. Responding honestly to all items is critical 
+          to receiving a correct result.
         </div>
       </td>
     </tr>
 
-    <tr style="height: 220px;">
+    <tr style="height: 190px;">
       <td>
       </td>
     </tr>
 
-    <tr style="height: 20px;">
+    <tr style="height: 0px;">
       <td>
         <div class="botaoInfo">
-          <ion-router-link (click)="maisInfo()" style="color: rgb(19, 10, 134);">Mais informações</ion-router-link>
+          <ion-router-link (click)="maisInfo()" style="color: rgb(19, 10, 134);">More information  .</ion-router-link>
         </div>
       </td>
     </tr>

@@ -2,6 +2,7 @@ import { Dados, DataLancamentoService } from '../services/data-lancamento.servic
 import { Component, Input, OnInit, ChangeDetectorRef} from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { FieldValue, serverTimestamp, Timestamp } from 'firebase/firestore'; 
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-modal-lancamento',
@@ -52,7 +53,19 @@ export class ModalLancamentoPage implements OnInit {
   }
  
   async atualizarLancamento() {
-    await this.dataLancamentoService.updateLancamento(this.lancamento);
+
+    forkJoin({
+      requestInterventionGroup:  this.dataLancamentoService.calcularInterventionGroup(this.lancamento),
+      requestComparativeGroup:  this.dataLancamentoService.calcularComparativeGroup(this.lancamento)
+    })
+    .subscribe(({requestInterventionGroup, requestComparativeGroup}) => {
+      this.lancamento.resultadoIntervencao = requestInterventionGroup;
+      this.lancamento.resultadoComparativo = requestComparativeGroup;
+      this.dataLancamentoService.updateLancamento(this.lancamento);
+    //  this.router.navigateByUrl(`/home/resultado?rInt=${requestInterventionGroup}&rComp=${requestComparativeGroup}`, { replaceUrl: true });
+    });
+  
+    //await this.dataLancamentoService.updateLancamento(this.lancamento);
     const toast = await this.toastCtrl.create({
       message: 'Dados atualizados com sucesso!',
       duration: 2000

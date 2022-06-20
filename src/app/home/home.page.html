@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Enfermeiro</ion-title>
+    <ion-title>Nurse</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-menu side="start" content-id="main">
@@ -15,13 +15,13 @@
   <ion-content>
     <ion-list>
       <ion-menu-toggle>
-        <ion-item [routerLink]="['/home/pacientes']">Pacientes</ion-item>
+        <ion-item [routerLink]="['/home/pacientes']">Patients</ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
-        <ion-item [routerLink]="['/home/realizar-lancamento']">Realizar Lançamento</ion-item>
+        <ion-item [routerLink]="['/home/realizar-lancamento']">Launch</ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
-        <ion-item [routerLink]="['/home/visualizar-historico']">Visualizar histórico</ion-item>
+        <ion-item [routerLink]="['/home/visualizar-historico']">View history</ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
         <ion-item (click)="logout()">Logout</ion-item>

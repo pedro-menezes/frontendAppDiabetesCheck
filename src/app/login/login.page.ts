@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, MenuController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
-import { AvatarService } from '../services/avatar.service';
 import { DataPessoaService, isAdmin } from '../services/data-pessoa.service';
 
 @Component({
@@ -52,10 +51,10 @@ export class LoginPage implements OnInit {
       if (user) {
         this.router.navigateByUrl('/criar-conta', { replaceUrl: true });
       } else {
-        this.showAlert('Erro na criação da conta', 'Por favor, tente novamente!');
+        this.showAlert('Account creation error', 'Please try again!');
     }
   }else {
-    this.showAlert('Erro na criação da conta', 'Preencha os campos com dados válidos!');
+    this.showAlert('Account creation error', 'Fill in the fields with valid data!');
   }
 }
  
@@ -75,7 +74,7 @@ export class LoginPage implements OnInit {
           this.router.navigateByUrl('/home', { replaceUrl: true });
         }
     } else {
-      this.showAlert('Erro no login', 'Por favor, tente novamente!');
+      this.showAlert('Login error', 'Please try again!');
     } 
   }
  

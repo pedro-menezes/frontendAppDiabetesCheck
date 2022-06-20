@@ -10,50 +10,48 @@
       <ion-input name="data" [(ngModel)]="data" type="hidden" disabled="true"> </ion-input>
     </ion-item>-->
     <ion-item>
-      <ion-select placeholder="Selecione o paciente *" [(ngModel)]="paciente" (ionChange)="buscarUltimoLancamento(paciente);">
+      <ion-select placeholder="Select the patient *" [(ngModel)]="paciente" (ionChange)="buscarUltimoLancamento(paciente);">
         <ion-select-option *ngFor="let paciente of pacientes" [value]="paciente.id" style="text-align: center">{{paciente.nome}}</ion-select-option>
       </ion-select>
     </ion-item>
-  <!-- <div *ngIf="dadosPaciente">--> 
       <ion-item>
         <ion-label position="stacked">Coren:*</ion-label>
         <ion-input name="coren" [(ngModel)]="coren" type="text"> </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Idade:*</ion-label>
+        <ion-label position="stacked">Age:*</ion-label>
         <ion-range min="0" max="120" [pin]="true" [(ngModel)]="idade"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Altura:*</ion-label>
+        <ion-label position="stacked">Height:*</ion-label>
         <ion-range min="0" max="230" [pin]="true" [(ngModel)]="altura"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Peso:*</ion-label>
+        <ion-label position="stacked">Weight:*</ion-label>
         <ion-range min="0" max="200" [pin]="true" [(ngModel)]="peso"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Triglicerídeos:*</ion-label>
+        <ion-label position="stacked">Triglycerides:*</ion-label>
         <ion-range min="-174" max="711" [pin]="true" [(ngModel)]="triglicerideos"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Tempo Evolutivo:*</ion-label>
+        <ion-label position="stacked">Evolutionary time:*</ion-label>
         <ion-range min="-15.2" max="46.4" [pin]="true" [(ngModel)]="tempoEvolutivo"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Circunferência Abdominal:*</ion-label>
+        <ion-label position="stacked">Abdominal circumference:*</ion-label>
         <ion-range min="45" max="153" [pin]="true" [(ngModel)]="circunferenciaAbdominal"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Renda:*</ion-label>
+        <ion-label position="stacked">Income:*</ion-label>
         <ion-range min="-400" max="1200" [pin]="true" [(ngModel)]="renda"></ion-range>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Escolaridade:*</ion-label>
+        <ion-label position="stacked">Schooling:*</ion-label>
         <ion-range min="-7.5" max="22.5" [pin]="true" [(ngModel)]="escolaridade"></ion-range>
       </ion-item>
-  <!-- </div>--> 
   </ion-list>
   <br>
-  <ion-button type="submit" color="success" (click)="calcularDiabetes()">Calcular</ion-button>
-  <ion-button type="button" color="danger"  [routerLink]="['/home']" routerDirection="forward"> Cancelar </ion-button>
+  <ion-button type="submit" color="success" (click)="calcularDiabetes()">Calculate</ion-button>
+  <ion-button type="button" color="danger"  [routerLink]="['/home']" routerDirection="forward"> Cancel </ion-button>
 </ion-content>

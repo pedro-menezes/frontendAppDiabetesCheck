@@ -6,14 +6,14 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item>
-      <ion-label>Selecione o paciente</ion-label>
+      <ion-label>Select the patient</ion-label>
       <ion-select placeholder="" [(ngModel)]="paciente" (ionChange)="listarLancamentos(paciente)">
         <ion-select-option *ngFor="let paciente of pacientes" [value]="paciente.id" style="text-align: center">{{paciente.nome}}</ion-select-option>
       </ion-select>
     </ion-item>
     <br><br>
     <ion-item *ngIf="paciente">
-      <h3>Lançamentos:</h3>
+      <h3>Releases:</h3>
     </ion-item>
     <ion-item *ngFor="let lancamento of lancamentos" (click)="openLancamento(lancamento)">
       <ion-label>
@@ -24,7 +24,7 @@
   
   <ion-card>
     <ion-card-header>
-      Histórico
+      History
     </ion-card-header>
     <ion-card-content>
       <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>

@@ -23,7 +23,7 @@ export class ModalPacientePage implements OnInit {
   async deletarPaciente() {
     await this.dataService.deletePaciente(this.paciente);
     const toast = await this.toastCtrl.create({
-      message: 'Exclusão realizada com sucesso!',
+      message: 'Deletion performed successfully!',
       duration: 2000
     });
     toast.present();
@@ -33,7 +33,7 @@ export class ModalPacientePage implements OnInit {
   async atualizarPaciente() {
     await this.dataService.updatePaciente(this.paciente);
     const toast = await this.toastCtrl.create({
-      message: 'Dados atualizados com sucesso!',
+      message: 'Data successfully updated!',
       duration: 2000
     });
     toast.present();

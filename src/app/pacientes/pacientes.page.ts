@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, MenuController} from '@ionic/angular';
+import { AlertController, ModalController} from '@ionic/angular';
 import { DataPacienteService, Paciente } from '../services/data-paciente.service';
 import { ModalPacientePage } from '../modal-paciente/modal-paciente.page';
 import { AuthService } from '../services/auth.service';
@@ -32,11 +32,11 @@ export class PacientesPage implements OnInit {
 
   async addPaciente() {
     const alert = await this.alertCtrl.create({
-      header: 'Cadastrar paciente',
+      header: 'Register patient',
       inputs: [
         {
           name: 'nome',
-          placeholder: 'Nome',
+          placeholder: 'Name',
           type: 'text',
         },
         {
@@ -46,12 +46,12 @@ export class PacientesPage implements OnInit {
         },
         {
           name: 'dataNascimento',
-          placeholder: 'Data de Nascimento',
+          placeholder: 'Birth date',
           type: 'text'
         },
         {
           name: 'telefone',
-          placeholder: 'Telefone',
+          placeholder: 'Phone number',
           type: 'text'
         },
         {
@@ -62,10 +62,10 @@ export class PacientesPage implements OnInit {
       ],
       buttons: [
         {
-          text: 'Cancelar',
+          text: 'Cancel',
           role: 'cancel'
         }, {
-          text: 'Salvar',
+          text: 'Save',
           handler: res => {
             this.dataPacienteService.addPaciente({ nome: res.nome, coren: res.coren, dataNascimento: res.dataNascimento, 
             telefone: res.telefone, email: res.email });

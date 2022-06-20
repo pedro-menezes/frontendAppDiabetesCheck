@@ -1,9 +1,5 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <!--
-    <ion-buttons slot="start">
-       <ion-menu-button></ion-menu-button>
-    </ion-buttons>-->
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +16,7 @@
     </ion-item>
  
     <ion-button type="submit" [disabled]="!credentials.valid">Login</ion-button>
-    <ion-button type="button"  color="secondary" (click)="register()">Criar conta</ion-button>
-    <ion-button type="button"  color="warning"  [routerLink]="['/alterar-senha']">Esqueci minha senha</ion-button>
+    <ion-button type="button"  color="secondary" (click)="register()">Create account</ion-button>
+    <ion-button type="button"  color="warning"  [routerLink]="['/alterar-senha']">I forgot my password</ion-button>
   </form>
 </ion-content>
