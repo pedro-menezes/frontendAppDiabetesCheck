@@ -4,6 +4,8 @@ import { DataPacienteService, Paciente } from '../services/data-paciente.service
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { forkJoin } from 'rxjs';
+
 @Component({
   selector: 'app-realizar-lancamento',
   templateUrl: './realizar-lancamento.page.html',
@@ -82,39 +84,16 @@ export class RealizarLancamentoPage implements OnInit {
         resultadoComparativo: 0
       }
 
-    /*//ForkJoin
-      Observable.forkJoin(
-        this.DataLancamentoService.calcularInterventionGroup(this.dados),
-        this.DataLancamentoService.calcularComparativeGroup(this.dados)
-      ).subscribe((([resultIntervention, resultComparative]: [number, number]) => {
-          this.dados.resultadoIntervencao = resultIntervention;
-          this.dados.resultadoComparativo = resultComparative;
-      }));
-
-    //CombineLatesWith
-      const name$ = this.DataLancamentoService.calcularInterventionGroup(this.dados)
-      const document$ = this.DataLancamentoService.calcularComparativeGroup(this.dados)
- 
-      name$.pipe(
-              combineLatestWith(document$)
-            )
-            .subscribe(([name, document]) => {
-                this.dados.resultadoIntervencao = name;
-                this.resultadoComparativo = pair.document;
-                //this.showForm();
-            }) */
-      
-
-      this.DataLancamentoService.calcularInterventionGroup(this.dados).subscribe(result =>
-        this.showAlert("Seu risco comparativo é: " + result)
-      );
-          
-      this.DataLancamentoService.calcularComparativeGroup(this.dados).subscribe(result =>
-        this.showAlert("Seu risco comparativo é: " + result)
-      );
-    
-      this.DataLancamentoService.addLancamento(this.dados);
-      this.router.navigateByUrl('/home/resultado', { replaceUrl: true });
+      forkJoin({
+        requestInterventionGroup:  this.DataLancamentoService.calcularInterventionGroup(this.dados),
+        requestComparativeGroup:  this.DataLancamentoService.calcularComparativeGroup(this.dados)
+      })
+      .subscribe(({requestInterventionGroup, requestComparativeGroup}) => {
+        this.dados.resultadoIntervencao = requestInterventionGroup;
+        this.dados.resultadoComparativo = requestComparativeGroup;
+        this.DataLancamentoService.addLancamento(this.dados);
+        this.router.navigateByUrl(`/home/resultado?rInt=${requestInterventionGroup}&rComp=${requestComparativeGroup}`, { replaceUrl: true });
+      });
     }
   }
   

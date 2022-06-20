@@ -35,12 +35,12 @@ export class DataLancamentoService {
     private firestore: Firestore,
     private auth: Auth) {}
 
-  calcularInterventionGroup(dados: Dados) {
-    return this.httpClient.post<Dados>(this.APIGrupo1, dados);
+  calcularInterventionGroup(dados: Dados) : Observable<number>{
+    return this.httpClient.post<number>(this.APIGrupo1, dados);
   }
  
-  calcularComparativeGroup(dados: Dados) {
-    return this.httpClient.post<Dados>(this.APIGrupo2, dados);
+  calcularComparativeGroup(dados: Dados) : Observable<number>{
+    return this.httpClient.post<number>(this.APIGrupo2, dados);
   }
 
   getLancamentoById(id): Observable<Dados> {
