@@ -21,7 +21,7 @@ export class VisualizarHistoricoPage implements OnInit {
 
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
   paciente: "";
-  lineChart: any;
+  lineChart: Chart;
   pacientes: Paciente[] = [];
   lancamentos: Dados[] = [];
   listaResultadosComparativos: number[] = [];
@@ -77,6 +77,10 @@ export class VisualizarHistoricoPage implements OnInit {
   }
 
   lineChartMethod() {
+    if(this.lineChart){
+      this.lineChart.destroy();
+    }
+
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {

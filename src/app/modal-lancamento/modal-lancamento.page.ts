@@ -1,8 +1,8 @@
 import { Dados, DataLancamentoService } from '../services/data-lancamento.service';
 import { Component, Input, OnInit, ChangeDetectorRef} from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { FieldValue, serverTimestamp, Timestamp } from 'firebase/firestore'; 
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-lancamento',
@@ -33,6 +33,7 @@ export class ModalLancamentoPage implements OnInit {
     private modalCtrl: ModalController, 
     private toastCtrl: ToastController,
     private cd: ChangeDetectorRef,
+    private router: Router
   ) 
   { }
  
@@ -50,6 +51,7 @@ export class ModalLancamentoPage implements OnInit {
     });
     toast.present();
     this.modalCtrl.dismiss();
+    document.location.reload();
   }
  
   async atualizarLancamento() {
@@ -72,5 +74,6 @@ export class ModalLancamentoPage implements OnInit {
     });
     toast.present();
     this.modalCtrl.dismiss();
+    document.location.reload();
   } 
 }
