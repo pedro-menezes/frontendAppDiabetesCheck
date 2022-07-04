@@ -16,7 +16,7 @@
     </ion-item>
  
     <ion-button type="submit" [disabled]="!credentials.valid">Login</ion-button>
-    <ion-button type="button"  color="secondary" (click)="register()">Create account</ion-button>
+    <ion-button type="button"  color="secondary" [routerLink]="['/criar-conta']">Create account</ion-button>
     <ion-button type="button"  color="warning"  [routerLink]="['/alterar-senha']">I forgot my password</ion-button>
   </form>
 </ion-content>

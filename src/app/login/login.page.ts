@@ -39,25 +39,6 @@ export class LoginPage implements OnInit {
     });
   }
  
-  async register() {
-
-    if(this.credentials.valid){
-      const loading = await this.loadingController.create();
-      await loading.present();
-  
-      const user = await this.authService.register(this.credentials.value);
-      await loading.dismiss();
-  
-      if (user) {
-        this.router.navigateByUrl('/criar-conta', { replaceUrl: true });
-      } else {
-        this.showAlert('Account creation error', 'Please try again!');
-    }
-  }else {
-    this.showAlert('Account creation error', 'Fill in the fields with valid data!');
-  }
-}
- 
   async login() {
     const loading = await this.loadingController.create();
     await loading.present();
