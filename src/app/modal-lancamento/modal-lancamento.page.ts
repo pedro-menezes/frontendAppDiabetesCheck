@@ -47,15 +47,16 @@ export class ModalLancamentoPage implements OnInit {
     await this.dataLancamentoService.deleteLancamento(this.lancamento);
     const toast = await this.toastCtrl.create({
       message: 'Exclusão realizada com sucesso!',
-      duration: 2000
+      duration: 2000,
+      color: 'success',
+      position: 'bottom'
     });
-    toast.present();
     this.modalCtrl.dismiss();
+    toast.present();
     document.location.reload();
   }
  
   async atualizarLancamento() {
-
     forkJoin({
       requestInterventionGroup:  this.dataLancamentoService.calcularInterventionGroup(this.lancamento),
       requestComparativeGroup:  this.dataLancamentoService.calcularComparativeGroup(this.lancamento)
@@ -70,10 +71,12 @@ export class ModalLancamentoPage implements OnInit {
     //await this.dataLancamentoService.updateLancamento(this.lancamento);
     const toast = await this.toastCtrl.create({
       message: 'Dados atualizados com sucesso!',
-      duration: 2000
+      duration: 2000,
+      color: 'success',
+      position: 'bottom'
     });
-    toast.present();
     this.modalCtrl.dismiss();
-    document.location.reload();
+    toast.present();
+    //document.location.reload();
   } 
 }

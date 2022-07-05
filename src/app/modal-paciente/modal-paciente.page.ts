@@ -24,19 +24,23 @@ export class ModalPacientePage implements OnInit {
     await this.dataService.deletePaciente(this.paciente);
     const toast = await this.toastCtrl.create({
       message: 'Deletion performed successfully!',
-      duration: 2000
+      duration: 2000,
+      color: 'success',
+      position: 'bottom'
     });
-    toast.present();
     this.modalCtrl.dismiss();
+    toast.present();
   }
  
   async atualizarPaciente() {
     await this.dataService.updatePaciente(this.paciente);
     const toast = await this.toastCtrl.create({
       message: 'Data successfully updated!',
-      duration: 2000
+      duration: 2000,
+      color: 'success',
+      position: 'bottom'
     });
-    toast.present();
     this.modalCtrl.dismiss();
+    toast.present();
   }
 }

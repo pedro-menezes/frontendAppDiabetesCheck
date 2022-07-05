@@ -1,9 +1,9 @@
-import { AlertController} from '@ionic/angular';
+import { AlertController, RangeCustomEvent } from '@ionic/angular';
 import { DataLancamentoService, Dados } from '../services/data-lancamento.service';
 import { DataPacienteService, Paciente } from '../services/data-paciente.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { RangeValue } from '@ionic/core';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -12,6 +12,47 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./realizar-lancamento.page.scss'],
 })
 export class RealizarLancamentoPage implements OnInit {
+  valorIdade: RangeValue;
+  valorAltura: RangeValue;
+  valorPeso: RangeValue;
+  valorTriglicerideos: RangeValue;
+  valorTempoEvolutivo: RangeValue;
+  valorCircunferenciaAbdominal: RangeValue;
+  valorRenda: RangeValue;
+  valorEscolaridade: RangeValue;
+ 
+  getValorIdade(ev: Event) {
+    this.valorIdade = (ev as RangeCustomEvent).detail.value;
+  }
+  
+  getValorAltura(ev: Event) {
+    this.valorAltura = (ev as RangeCustomEvent).detail.value;
+  }
+
+  getValorPeso(ev: Event) {
+    this.valorPeso = (ev as RangeCustomEvent).detail.value;
+  }
+
+  getValorTriglicerideos(ev: Event) {
+    this.valorTriglicerideos = (ev as RangeCustomEvent).detail.value;
+  }
+
+  getValorTempoEvolutivo(ev: Event) {
+    this.valorTempoEvolutivo = (ev as RangeCustomEvent).detail.value;
+  }
+
+  getValorCircunferenciaAbdominal(ev: Event) {
+    this.valorCircunferenciaAbdominal = (ev as RangeCustomEvent).detail.value;
+  }
+
+  getValorRenda(ev: Event) {
+    this.valorRenda = (ev as RangeCustomEvent).detail.value;
+  }
+
+  getValorEscolaridade(ev: Event) {
+    this.valorEscolaridade = (ev as RangeCustomEvent).detail.value;
+  }
+
   idPaciente: string;
   coren: string;
   data: string;
