@@ -18,17 +18,18 @@
 
     <ion-item>
       <ion-label position="stacked">Birth date</ion-label>
-      <ion-textarea [(ngModel)]="paciente.dataNascimento"></ion-textarea>
+      <!--<ion-input type="date" [(ngModel)]="paciente.dataNascimento"></ion-input>-->
+      <ion-input [(ngModel)]="paciente.dataNascimento"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Phone number</ion-label>
-      <ion-textarea [(ngModel)]="paciente.telefone"></ion-textarea>
+      <ion-input [(ngModel)]="paciente.telefone"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Email</ion-label>
-      <ion-textarea [(ngModel)]="paciente.email"></ion-textarea>
+      <ion-input [(ngModel)]="paciente.email"></ion-input>
     </ion-item>
 
   </div>

@@ -47,7 +47,7 @@ export class PacientesPage implements OnInit {
         {
           name: 'dataNascimento',
           placeholder: 'Birth date',
-          type: 'text'
+          type: 'date'
         },
         {
           name: 'telefone',
@@ -67,7 +67,8 @@ export class PacientesPage implements OnInit {
         }, {
           text: 'Save',
           handler: res => {
-            this.dataPacienteService.addPaciente({ nome: res.nome, coren: res.coren, dataNascimento: res.dataNascimento, 
+            var dataFormatada = res.dataNascimento.split("-").reverse().join("-");
+            this.dataPacienteService.addPaciente({ nome: res.nome, coren: res.coren, dataNascimento: dataFormatada, 
             telefone: res.telefone, email: res.email });
           }
         }
