@@ -4,6 +4,8 @@ import { DataPacienteService, Paciente } from '../services/data-paciente.service
 import { ModalPacientePage } from '../modal-paciente/modal-paciente.page';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { DataPessoaService } from '../services/data-pessoa.service';
+import { getNumberOfCurrencyDigits } from '@angular/common';
 
 @Component({
   selector: 'app-pacientes',
@@ -12,9 +14,11 @@ import { Router } from '@angular/router';
 })
 export class PacientesPage implements OnInit {
   pacientes: Paciente[] = [];
+  corenEnfermeiroLogado: string;
 
   constructor(
     private dataPacienteService: DataPacienteService,  
+    private dataPessoaService: DataPessoaService,  
     private cd: ChangeDetectorRef, 
     private alertCtrl: AlertController, 
     private modalCtrl: ModalController,
@@ -25,9 +29,18 @@ export class PacientesPage implements OnInit {
       this.pacientes = res;
       this.cd.detectChanges();
     });
+
+    this.getCoren();
   }
 
   ngOnInit() {
+  }
+
+  async getCoren(){
+    var id = await this.dataPessoaService.getUser();
+    this.dataPessoaService.getPessoaById(id).subscribe(res => {
+      this.corenEnfermeiroLogado = res.coren;
+    })
   }
 
   async addPaciente() {
@@ -43,6 +56,8 @@ export class PacientesPage implements OnInit {
           name: 'coren',
           placeholder: 'Coren',
           type: 'text',
+          value: this.corenEnfermeiroLogado,
+          disabled: true
         },
         {
           name: 'dataNascimento',
