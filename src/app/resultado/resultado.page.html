@@ -7,11 +7,15 @@
 
 <ion-content [fullscreen]="true">
   <div class="ion-padding">
-    <ion-list>
-      <ion-item>
-        Results
-      </ion-item>
-      </ion-list>
+    <ion-text>
+      <h2 style="text-align:center;">Results</h2>
+    </ion-text><br>
+    <ion-text>
+      <h5 value='this.resultadoIntervencao'>Intervention Group: {{ resultadoIntervencao }}</h5>
+    </ion-text>
+    <ion-text>
+      <h5 value='this.resultadoComparativo'>Comparative group: {{ resultadoComparativo }}</h5>
+    </ion-text><br>
     <ion-card>
       <ion-card-header>
         Risk of diabetes

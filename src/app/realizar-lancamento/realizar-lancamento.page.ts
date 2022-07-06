@@ -196,6 +196,15 @@ export class RealizarLancamentoPage implements OnInit {
         this.resultadoIntervencao = this.dadosPaciente.resultadoIntervencao;
         this.resultadoComparativo = this.dadosPaciente.resultadoComparativo;
 
+        this.valorIdade = this.idade;
+        this.valorAltura = this.altura;
+        this.valorPeso = this.peso;
+        this.valorTriglicerideos = this.triglicerideos;
+        this.valorTempoEvolutivo = this.tempoEvolutivo;
+        this.valorCircunferenciaAbdominal = this.circunferenciaAbdominal;
+        this.valorRenda = this.renda;
+        this.valorEscolaridade = this.escolaridade;
+
         this.cd.detectChanges();
 
       } else{
