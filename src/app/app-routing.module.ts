@@ -65,6 +65,10 @@ const routes: Routes = [
     path: 'alterar-senha',
     loadChildren: () => import('./alterar-senha/alterar-senha.module').then( m => m.AlterarSenhaPageModule)
   },
+  {
+    path: 'relatorio-por-data',
+    loadChildren: () => import('./relatorio-por-data/relatorio-por-data.module').then( m => m.RelatorioPorDataPageModule)
+  },
 ];
 
 @NgModule({

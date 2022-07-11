@@ -6,8 +6,14 @@ import { HomeAdminPage } from './home-admin.page';
 const routes: Routes = [
   {
     path: '',
-    component: HomeAdminPage
-  }
+    component: HomeAdminPage,
+    children: [
+      {
+        path: 'relatorio-por-data',
+        loadChildren: () => import('../relatorio-por-data/relatorio-por-data.module').then(m => m.RelatorioPorDataPageModule),
+      }
+    ] 
+  },
 ];
 
 @NgModule({

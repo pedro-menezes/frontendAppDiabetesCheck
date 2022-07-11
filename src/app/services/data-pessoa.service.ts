@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, query, collectionData, doc, setDoc, docData, addDoc, deleteDoc, updateDoc, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, query, collectionData, doc, setDoc, docData, addDoc, deleteDoc, updateDoc, orderBy, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { Storage } from '@angular/fire/storage';
@@ -66,6 +66,11 @@ export class DataPessoaService {
   getPessoas(): Observable<Pessoa[]> {
     const pessoasRef = query(collection(this.firestore, 'users'), orderBy("nome"));
     return collectionData(pessoasRef,  { idField: 'id'}) as Observable<Pessoa[]>;
+  }
+
+  getEnfermeiros(): Observable<Pessoa[]> {
+    const enfermeirosRef = query(collection(this.firestore, 'users'), where("tipoPerfil", "==", "2"), orderBy("nome"));
+    return collectionData(enfermeirosRef,  { idField: 'id'}) as Observable<Pessoa[]>;
   }
  
   deletePessoa(pessoa: Pessoa) {
