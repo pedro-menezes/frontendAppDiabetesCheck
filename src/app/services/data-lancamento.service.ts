@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Firestore, collection, query, collectionData, doc, docData, addDoc, serverTimestamp, deleteDoc, updateDoc, orderBy, where, FieldValue } from '@angular/fire/firestore';
 import {Timestamp } from 'firebase/firestore';
 import { Auth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface Dados {
   id?: string;
@@ -30,6 +30,8 @@ export class DataLancamentoService {
   
   private readonly APIGrupo1 = '/api/diabetesIntervention';
   private readonly APIGrupo2 = '/api/diabetesComparative';
+  private readonly API_URL = 'http://localhost:8080/api/';
+  
 
   constructor(private httpClient: HttpClient,
     private firestore: Firestore,
@@ -43,16 +45,29 @@ export class DataLancamentoService {
     return this.httpClient.post<number>(this.APIGrupo2, dados);
   }
 
+  
   getLancamentoById(id): Observable<Dados> {
     const lancamentoDocRef = doc(this.firestore, `lancamentos/${id}`);
     return docData(lancamentoDocRef, { idField: 'id' }) as Observable<Dados>;
   }
 
+  getLancamentoByIdPatient(id: string, token: string){
+    let header = new HttpHeaders({ "Authorization": "Bearer "+token});
+    return this.httpClient.get<any>(this.API_URL+"launch/getByIdPatient/"+id, {headers: header});
+  }
+
+  getLancamentosByCoren2(coren: string, token: string) : Observable<Dados[]>{
+    let header = new HttpHeaders({ "Authorization": "Bearer "+token});
+    return this.httpClient.get<any>(this.API_URL+"launch/getByCoren/"+coren, {headers: header});
+  }
+
+ 
   getLancamentosByIdPaciente(id): Observable<Dados[]> {
     const lancamentoDocRef = query(collection(this.firestore, 'lancamentos'), where("idPaciente", "==", id), orderBy("data", "desc"));
     return collectionData(lancamentoDocRef,  { idField: 'id'}) as Observable<Dados[]>;
   }
 
+  
   getLancamentosByCoren(coren): Observable<Dados[]> {
     const lancamentoDocRef = query(collection(this.firestore, 'lancamentos'), where("coren", "==", coren));
     return collectionData(lancamentoDocRef,  { idField: 'id'}) as Observable<Dados[]>;

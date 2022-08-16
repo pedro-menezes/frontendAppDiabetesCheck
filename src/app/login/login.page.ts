@@ -1,67 +1,84 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, MenuController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
-import { DataPessoaService, isAdmin } from '../services/data-pessoa.service';
+import { AlertController} from '@ionic/angular';
+import { Credenciais, UserService } from '../services/user.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
-  credentials: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private loadingController: LoadingController,
+export class LoginPage implements OnInit{
+  username: string = "";
+  password: string = "";
+
+  constructor( 
     private alertController: AlertController,
-    private authService: AuthService,
-    public menuCtrl: MenuController,
+    private userService: UserService,
     private router: Router,
-    private pessoaService: DataPessoaService
-  ) {}
- 
-  // Easy access for form fields
-  get email() {
-    return this.credentials.get('email');
-  }
- 
-  get password() {
-    return this.credentials.get('password');
-  }
- 
-  ngOnInit() {
-    this.credentials = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
- 
-  async login() {
-    const loading = await this.loadingController.create();
-    await loading.present();
- 
-    const user = await this.authService.login(this.credentials.value);
-    await loading.dismiss();
- 
-    if (user) {
-      const pessoa = await this.pessoaService.getPerfilPessoa(user.user.uid);
+    private storage: Storage
+    ) {}
 
-        if(isAdmin(pessoa)){
-          this.router.navigateByUrl('/home-admin', { replaceUrl: true });
-        } else {
-          this.router.navigateByUrl('/home', { replaceUrl: true });
-        }
-    } else {
-      this.showAlert('Login error', 'Please try again!');
-    } 
+  ngOnInit(): void {
+    this.username = "";
+    this.password = "";
   }
- 
-  async showAlert(header, message) {
+
+  login(){
+    if(this.validarFormulario()){
+      const dados: Credenciais = {
+        username: this.username,
+        password: this.password
+      }
+
+      this.userService.login(dados).subscribe( async result =>{
+        let token = result.access_token;
+        await this.storage.set('access_token', token);
+        await this.storage.set('username', dados.username);
+        this.userService.getUserByUsername(this.username, token).subscribe(res => {
+          if (res.status == "0") {
+            this.showAlert("Erro! Essa conta ainda nao foi ativada pelo admin.");
+          } else {
+            if (this.isAdmin(res.roles)){
+              this.router.navigateByUrl('/home-admin', { replaceUrl: true });
+
+            }else{
+              this.router.navigateByUrl('/home', { replaceUrl: true });
+            }
+          }
+        }); 
+      }, err => {
+        console.log(err.message);
+        this.showAlert("Erro na autenticacao! Tente novamente.")
+      });
+    }
+  }
+
+  validarFormulario(){
+    if(this.username == ""){
+      this.showAlert("Preencha o campo 'username'!");
+      return false;
+    }else if(this.password == ""){
+      this.showAlert("Preencha o campo 'password'!");
+      return false;
+    }
+    return true;
+  }
+
+  isAdmin(roles){
+    var admin = false;
+    for(let l of roles){
+      if(l.name == "ROLE_ADMIN"){
+        admin = true;
+      }
+      return admin;
+    }
+  }
+  
+  async showAlert(message) {
     const alert = await this.alertController.create({
-      header,
       message,
       buttons: ['OK'],
     });

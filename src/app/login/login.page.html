@@ -5,18 +5,17 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="login()" [formGroup]="credentials">
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
-      <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email is invalid</ion-note>
+    <ion-item>
+      <ion-label position="stacked">Username</ion-label>
+      <ion-input type="text" [(ngModel)]="username"></ion-input>
     </ion-item>
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Password needs to be 6 characters</ion-note>
+    <ion-item>
+      <ion-label position="stacked">Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
     </ion-item>
- 
-    <ion-button type="submit" [disabled]="!credentials.valid">Login</ion-button>
-    <ion-button type="button"  color="secondary" [routerLink]="['/criar-conta']">Create account</ion-button>
+
+    <ion-button type="button" color="success" (click)="login()">Login</ion-button>
+    <ion-button type="button" color="primary" [routerLink]="['/criar-conta']">Create account</ion-button>
     <ion-button type="button"  color="warning"  [routerLink]="['/alterar-senha']">I forgot my password</ion-button>
-  </form>
+  
 </ion-content>

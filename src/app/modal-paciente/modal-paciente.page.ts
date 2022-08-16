@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Paciente, DataPacienteService } from '../services/data-paciente.service';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { Patient, PatientService } from '../services/patient.service';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-modal-paciente',
@@ -8,20 +10,42 @@ import { ModalController, ToastController } from '@ionic/angular';
   styleUrls: ['./modal-paciente.page.scss'],
 })
 export class ModalPacientePage implements OnInit {
-
   @Input() id: string;
-  paciente: Paciente = null;
+  patient: Patient = null;
+  token: string = "";
+  username: string="";
  
-  constructor(private dataService: DataPacienteService, private modalCtrl: ModalController, private toastCtrl: ToastController) { }
+  constructor(private patientService: PatientService, 
+    private modalCtrl: ModalController, 
+    private toastCtrl: ToastController,
+    private storage: Storage,
+    private router: Router,
+    private alertController: AlertController) { }
  
-  ngOnInit() {
-    this.dataService.getPacienteById(this.id).subscribe(res => {
-      this.paciente = res;
+  async ngOnInit() {
+    await this.storage.get('access_token').then((val) => {
+      this.token = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }
+    });
+
+    await this.storage.get('username').then((val) => {
+      this.username = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('principal');
+      }
+    });
+
+    this.patientService.getPatientById(this.id, this.token).subscribe(res => {
+      this.patient = res;
     });
   }
  
-  async deletarPaciente() {
-    await this.dataService.deletePaciente(this.paciente);
+  async deletePatient() {
+    await this.patientService.deletePatient(this.patient.id, this.token).subscribe();
     const toast = await this.toastCtrl.create({
       message: 'Deletion performed successfully!',
       duration: 2000,
@@ -32,8 +56,8 @@ export class ModalPacientePage implements OnInit {
     toast.present();
   }
  
-  async atualizarPaciente() {
-    await this.dataService.updatePaciente(this.paciente);
+  async updatePatient() {
+    await this.patientService.updatePatient(this.patient, this.patient.id, this.token).subscribe();
     const toast = await this.toastCtrl.create({
       message: 'Data successfully updated!',
       duration: 2000,
@@ -42,5 +66,13 @@ export class ModalPacientePage implements OnInit {
     });
     this.modalCtrl.dismiss();
     toast.present();
+  }
+  
+  async showAlert(message) {
+    const alert = await this.alertController.create({
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }

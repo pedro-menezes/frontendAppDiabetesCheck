@@ -3,15 +3,15 @@
   <ion-list>
     <h3 style="text-align: center;">Patients</h3>
     <div style="margin-top: 30px;"></div>
-    <ion-item *ngFor="let paciente of pacientes" (click)="openPaciente(paciente)">
+    <ion-item *ngFor="let patient of patients" (click)="openPatient(patient)">
       <ion-label>
-        {{ paciente.nome }}
+        {{ patient.name }}
       </ion-label>
     </ion-item>
   </ion-list>
  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addPaciente()">
+    <ion-fab-button (click)="addPatient()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

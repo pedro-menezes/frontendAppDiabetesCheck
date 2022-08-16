@@ -3,6 +3,10 @@ import { AlertController } from '@ionic/angular';
 import { Dados, DataLancamentoService } from '../services/data-lancamento.service';
 import { DataPacienteService } from '../services/data-paciente.service';
 import { DataPessoaService, Pessoa } from '../services/data-pessoa.service';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { PatientService } from '../services/patient.service';
 
 @Component({
   selector: 'app-relatorio-por-data',
@@ -10,42 +14,69 @@ import { DataPessoaService, Pessoa } from '../services/data-pessoa.service';
   styleUrls: ['./relatorio-por-data.page.scss'],
 })
 export class RelatorioPorDataPage implements OnInit {
-  enfermeiro: Pessoa;
-  enfermeiros: Pessoa[] = [];
-  dataInicio: string;
-  dataFim: string;
+  nurse: Pessoa;
+  nurses: Pessoa[] = [];
+  startDate: string;
+  finalDate: string;
   result: Dados[] = [];
-  lancamentos: Dados[] = [];
+  launchs: Dados[] = [];
   l: Dados;
-  idsPacientes: string[] = [];
-  nomesPacientes: string[] = [];
+  idsPatients: string[] = [];
+  namesPatients: string[] = [];
+  token: string = "";
+  username: string="";
 
   constructor(
     private alertController: AlertController,
-    private dataPessoaService: DataPessoaService,
-    private dataPacienteService: DataPacienteService,
+    private userService: UserService,
+    private patientService: PatientService,
     private dataLancamentoService: DataLancamentoService,
-    private cd: ChangeDetectorRef
+    private storage: Storage,
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) { 
-  this.dataPessoaService.getEnfermeiros().subscribe(res => {
-    this.enfermeiros = res;
-    this.cd.detectChanges();
-  });
 }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.storage.get('access_token').then((val) => {
+      this.token = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }
+    });
+
+    await this.storage.get('username').then((val) => {
+      this.username = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('principal');
+      }
+    });
+
+    this.userService.getUsers(this.token).subscribe(res => {
+      for (let l of res) {
+        var roles = l.roles;
+        for (let m of roles) {
+          if (m.name == "ROLE_NURSE") {
+            this.nurses.push(l);
+          }
+        }
+      }
+    });
   }
 
-  listarPacientes(){
+  listPatients(){
+    
     this.result = [];
-    this.lancamentos = [];
-    this.idsPacientes = [];
-    this.nomesPacientes = [];
+    this.launchs = [];
+    this.idsPatients = [];
+    this.namesPatients = [];
 
-    var coren = this.enfermeiro.coren.toString();
+    let coren = this.nurse.coren.toString();
     
     //Lista todos os lançamentos realizados por aquele enfermeiro
-    this.dataLancamentoService.getLancamentosByCoren(coren).subscribe(res => {
+    this.dataLancamentoService.getLancamentosByCoren2(coren, this.token).subscribe(res => {
       this.result = res;
 
       //Se existir pelo menos um lançamento
@@ -72,27 +103,27 @@ export class RelatorioPorDataPage implements OnInit {
             data = ano + "-0" + mes + "-" + dia;
           }
 
-          if(data >= this.dataInicio && data <= this.dataFim ){
-            this.lancamentos[i] = l;
+          if(data >= this.startDate && data <= this.finalDate ){
+            this.launchs[i] = l;
             i++;
           }
         }
 
         //Se estiver pelo menos uma data no intervalo
-        if(this.lancamentos.length > 0){
+        if(this.launchs.length > 0){
           
           i = 0;
           //Armazena os ids dos pacientes desses lançamentos válidos
-          for(let m of this.lancamentos){
-            this.idsPacientes[i] = m.idPaciente;
+          for(let m of this.launchs){
+            this.idsPatients[i] = m.idPaciente;
             i++;
           }
        
           i = 0;
           //Armazena os nomes dos pacientes, buscando por id
-          for(let n of this.idsPacientes){
-            this.dataPacienteService.getPacienteById(n).subscribe(res => {
-              this.nomesPacientes[i] = res.nome;
+          for(let n of this.idsPatients){
+            this.patientService.getPatientById(n, this.token).subscribe(res => {
+              this.namesPatients[i] = res.nome;
               i++;
             });
           }

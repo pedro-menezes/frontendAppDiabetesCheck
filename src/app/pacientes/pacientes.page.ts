@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { AlertController, ModalController} from '@ionic/angular';
-import { DataPacienteService, Paciente } from '../services/data-paciente.service';
 import { ModalPacientePage } from '../modal-paciente/modal-paciente.page';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { DataPessoaService } from '../services/data-pessoa.service';
-import { getNumberOfCurrencyDigits } from '@angular/common';
+import { Storage } from '@ionic/storage';
+import { UserService } from '../services/user.service';
+import { PatientService, Patient } from '../services/patient.service';
 
 @Component({
   selector: 'app-pacientes',
@@ -13,42 +12,63 @@ import { getNumberOfCurrencyDigits } from '@angular/common';
   styleUrls: ['./pacientes.page.scss'],
 })
 export class PacientesPage implements OnInit {
-  pacientes: Paciente[] = [];
-  corenEnfermeiroLogado: string;
+  patients: Patient[] = [];
+  corenNurse: string;
+  token: string = "";
+  username: string="";
 
   constructor(
-    private dataPacienteService: DataPacienteService,  
-    private dataPessoaService: DataPessoaService,  
-    private cd: ChangeDetectorRef, 
     private alertCtrl: AlertController, 
     private modalCtrl: ModalController,
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private storage: Storage,
+    private alertController: AlertController,
+    private userService: UserService,
+    private patientService: PatientService
     ) {
-    this.dataPacienteService.getPacientes().subscribe(res => {
-      this.pacientes = res;
-      this.cd.detectChanges();
+  }
+
+  async ngOnInit() {
+    await this.storage.get('access_token').then((val) => {
+      this.token = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }
+    });
+
+    await this.storage.get('username').then((val) => {
+      this.username = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('principal');
+      }
     });
 
     this.getCoren();
+
+    this.getPatients();
+    
   }
 
-  ngOnInit() {
-  }
-
-  async getCoren(){
-    var id = await this.dataPessoaService.getUser();
-    this.dataPessoaService.getPessoaById(id).subscribe(res => {
-      this.corenEnfermeiroLogado = res.coren;
+  getCoren(){
+    this.userService.getUserByUsername(this.username, this.token).subscribe(res => {
+      this.corenNurse = res.coren;
     })
   }
 
-  async addPaciente() {
+  getPatients(){
+    this.patientService.getPatients(this.token).subscribe(res => {
+      this.patients = res;
+    });
+  }
+
+  async addPatient() {
     const alert = await this.alertCtrl.create({
       header: 'Register patient',
       inputs: [
         {
-          name: 'nome',
+          name: 'name',
           placeholder: 'Name',
           type: 'text',
         },
@@ -56,16 +76,16 @@ export class PacientesPage implements OnInit {
           name: 'coren',
           placeholder: 'Coren',
           type: 'text',
-          value: this.corenEnfermeiroLogado,
+          value: this.corenNurse,
           disabled: true
         },
         {
-          name: 'dataNascimento',
+          name: 'birthDate',
           placeholder: 'Birth date',
           type: 'date'
         },
         {
-          name: 'telefone',
+          name: 'phoneNumber',
           placeholder: 'Phone number',
           type: 'text'
         },
@@ -82,9 +102,12 @@ export class PacientesPage implements OnInit {
         }, {
           text: 'Save',
           handler: res => {
-            var dataFormatada = res.dataNascimento.split("-").reverse().join("-");
-            this.dataPacienteService.addPaciente({ nome: res.nome, coren: res.coren, dataNascimento: dataFormatada, 
-            telefone: res.telefone, email: res.email });
+            var dataFormatada = res.birthDate.split("-").reverse().join("-");
+            this.patientService.addPatient({ name: res.name, coren: res.coren, birthDate: dataFormatada, 
+            phoneNumber: res.phoneNumber, email: res.email }, this.token).subscribe(res => {
+              //console.log(res);
+              this.getPatients();
+            });
           }
         }
       ]
@@ -93,10 +116,10 @@ export class PacientesPage implements OnInit {
     await alert.present();
   }
  
-  async openPaciente(paciente: Paciente) {
+  async openPatient(patient: Patient) {
     const modal = await this.modalCtrl.create({
       component: ModalPacientePage,
-      componentProps: { id: paciente.id },
+      componentProps: { id: patient.id },
       breakpoints: [0, 0.5, 0.8],
       initialBreakpoint: 0.8
     });
@@ -105,8 +128,16 @@ export class PacientesPage implements OnInit {
   }
 
   async logout() {
-    await this.authService.logout();
+    this.storage.set('access_token', "");
     this.router.navigateByUrl('/', { replaceUrl: true });
+  }
+
+  async showAlert(message) {
+    const alert = await this.alertController.create({
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }
 

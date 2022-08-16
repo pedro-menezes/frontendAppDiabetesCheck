@@ -72,7 +72,7 @@ export class DataPessoaService {
     const enfermeirosRef = query(collection(this.firestore, 'users'), where("tipoPerfil", "==", "2"), orderBy("nome"));
     return collectionData(enfermeirosRef,  { idField: 'id'}) as Observable<Pessoa[]>;
   }
- 
+  
   deletePessoa(pessoa: Pessoa) {
     const pessoaDocRef = doc(this.firestore, `users/${pessoa.id}`);
     return deleteDoc(pessoaDocRef);

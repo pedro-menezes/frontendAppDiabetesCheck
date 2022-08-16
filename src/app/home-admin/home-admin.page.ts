@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home-admin',
@@ -10,14 +10,15 @@ import { Router } from '@angular/router';
 export class HomeAdminPage implements OnInit {
 
   constructor( 
-    private authService: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private storage: Storage
+) { }
 
   ngOnInit() {
   }
 
   async logout() {
-    await this.authService.logout();
+    this.storage.set('access_token', "");
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 }

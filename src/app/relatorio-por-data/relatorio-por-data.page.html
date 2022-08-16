@@ -7,30 +7,30 @@
   <ion-list>
     <ion-item>
       <ion-label>Select the nurse</ion-label>
-      <ion-select placeholder="" [(ngModel)]="enfermeiro">
-        <ion-select-option *ngFor="let enfermeiro of enfermeiros" [value]="enfermeiro" style="text-align: center">{{enfermeiro.nome}}</ion-select-option>
+      <ion-select placeholder="" [(ngModel)]="nurse">
+        <ion-select-option *ngFor="let nurse of nurses" [value]="nurse" style="text-align: center">{{nurse.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Start date:</ion-label>
-      <ion-input type="date" [(ngModel)]="dataInicio" ></ion-input>
+      <ion-input type="date" [(ngModel)]="startDate" ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Final date:</ion-label>
-      <ion-input type="date" [(ngModel)]="dataFim" ></ion-input>
+      <ion-input type="date" [(ngModel)]="finalDate" ></ion-input>
     </ion-item>
     <br><br>
 
     <ion-list style="text-align:center">
-      <ion-button (click)="listarPacientes()">Search</ion-button>
+      <ion-button (click)="listPatients()">Search</ion-button>
     </ion-list>
 
-    <ion-item *ngIf="nomesPacientes.length > 0">
+    <ion-item *ngIf="namesPatients.length > 0">
       <h3>Patientes:</h3>
     </ion-item>
-    <ion-item *ngFor="let paciente of nomesPacientes">
+    <ion-item *ngFor="let patient of namesPatient">
       <ion-label>
-        {{ paciente }} 
+        {{ patient }} 
       </ion-label>
     </ion-item>
   </ion-list>

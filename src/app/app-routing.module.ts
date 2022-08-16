@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {
-  redirectUnauthorizedTo,
+ // redirectUnauthorizedTo,
   redirectLoggedInTo,
   canActivate,
 } from '@angular/fire/auth-guard';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
+//const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: '',
@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'realizar-lancamento',
     loadChildren: () => import('./realizar-lancamento/realizar-lancamento.module').then( m => m.RealizarLancamentoPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'login',
@@ -35,7 +35,7 @@ const routes: Routes = [
   {
     path: 'home-admin',
     loadChildren: () => import('./home-admin/home-admin.module').then( m => m.HomeAdminPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    //...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'criar-conta',
