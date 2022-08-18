@@ -1,23 +1,23 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Dados pessoais</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item>
       <ion-label>Select the patient</ion-label>
-      <ion-select placeholder="" [(ngModel)]="paciente" (ionChange)="listarLancamentos(paciente)">
-        <ion-select-option *ngFor="let paciente of pacientes" [value]="paciente.id" style="text-align: center">{{paciente.nome}}</ion-select-option>
+      <ion-select placeholder="" [(ngModel)]="patient" (ionChange)="listLaunchs(patient)">
+        <ion-select-option *ngFor="let patient of patients" [value]="patient.id" style="text-align: center">{{patient.name}}</ion-select-option>
       </ion-select>
     </ion-item>
     <br><br>
-    <ion-item *ngIf="paciente">
+    <ion-item *ngIf="patient">
       <h3>Releases:</h3>
     </ion-item>
-    <ion-item *ngFor="let lancamento of lancamentos" (click)="openLancamento(lancamento)">
+    <ion-item *ngFor="let launch of launchs" (click)="openLaunch(launch)">
       <ion-label>
-        {{ lancamento.data.seconds * 1000 | date:'dd/MM/yyyy HH:mm:ss' }} 
+        {{ launch.date }} 
       </ion-label>
     </ion-item>
   </ion-list>

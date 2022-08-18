@@ -1,13 +1,14 @@
 import { AlertController, ModalController} from '@ionic/angular';
-import { DataPacienteService, Paciente } from '../services/data-paciente.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataLancamentoService, Dados} from '../services/data-lancamento.service';
 import { ModalLancamentoPage } from '../modal-lancamento/modal-lancamento.page';
 import { ElementRef, ViewChild } from '@angular/core';
 import { Chart, LinearScale, BarController, CategoryScale, BarElement, DoughnutController, ArcElement, LineController,
   PointElement, LineElement,
 } from 'chart.js';
+import { Data, LaunchService } from '../services/launch.service';
+import { Patient, PatientService } from '../services/patient.service';
+import { Storage } from '@ionic/storage';
 
 Chart.register( LinearScale, BarController, CategoryScale, BarElement, DoughnutController, ArcElement, LineController,
   PointElement, LineElement);
@@ -20,55 +21,84 @@ Chart.register( LinearScale, BarController, CategoryScale, BarElement, DoughnutC
 export class VisualizarHistoricoPage implements OnInit {
 
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
-  paciente: "";
+  patient: "";
   lineChart: Chart;
-  pacientes: Paciente[] = [];
-  lancamentos: Dados[] = [];
+  patients: Patient[] = [];
+  launchs: Data[] = [];
   listaResultadosComparativos: number[] = [];
   listaResultadosIntervencao: number[] = [];
+  token: string = "";
+  username: string="";
 
   constructor(
-    private dataLancamentoService: DataLancamentoService,
     private alertController: AlertController,
-    private dataPacienteService: DataPacienteService,  
+    private patientService: PatientService,  
     private cd: ChangeDetectorRef,
     private router: Router,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private storage: Storage,
+    private launchService: LaunchService
   ) { 
-    this.dataPacienteService.getPacientes().subscribe(res => {
-      this.pacientes = res;
-      this.cd.detectChanges();
+  }
+
+  async ngOnInit() {
+    await this.storage.get('access_token').then((val) => {
+      this.token = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }
+    });
+
+    await this.storage.get('username').then((val) => {
+      this.username = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('principal');
+      }
+    });
+
+    this.patientService.getPatients(this.token).subscribe(res => {
+      this.patients = res;
     });
   }
 
-  ngOnInit() {
-  }
+  listLaunchs(id){
+    this.launchService.getLaunchsByIdPatient(id, this.token).subscribe(res => {
+      this.launchs = res;
 
-  listarLancamentos(id){
-    this.dataLancamentoService.getLancamentosByIdPaciente(id).subscribe(res => {
-      this.lancamentos = res;
-      this.cd.detectChanges();
-
+      var k = 0;
+      for (let l of this.launchs) {
+        l.date = this.formatDate(l.date);
+        k++;
+      }
+      
       var i = 0;
-      for (let l of this.lancamentos) {
-        this.listaResultadosComparativos[i] = l.resultadoComparativo;
+      for (let l of this.launchs) {
+        this.listaResultadosComparativos[i] = l.comparativeResult;
         i++;
       }
 
       var j = 0;
-      for (let l of this.lancamentos) {
-        this.listaResultadosIntervencao[j] = l.resultadoIntervencao;
+      for (let l of this.launchs) {
+        this.listaResultadosIntervencao[j] = l.interventionResult;
         j++;
       }
 
       this.lineChartMethod();
-   });
+    });
   }
 
-  async openLancamento(lancamento: Dados) {
+  formatDate(date){
+    let dateF = date.split("T")[0];
+    let time = date.split("T")[1].split(".")[0];
+    return dateF + "   " + time;
+  }
+
+  async openLaunch(launch: Data) {
     const modal = await this.modalCtrl.create({
       component: ModalLancamentoPage,
-      componentProps: { id: lancamento.id },
+      componentProps: { id: launch.id },
       breakpoints: [0, 0.5, 0.8],
       initialBreakpoint: 0.8
     });
@@ -133,6 +163,14 @@ export class VisualizarHistoricoPage implements OnInit {
         ]
       }
     });
+  }
+
+  async showAlert(message) {
+    const alert = await this.alertController.create({
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 
 }

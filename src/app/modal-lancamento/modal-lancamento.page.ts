@@ -1,8 +1,9 @@
-import { Dados, DataLancamentoService } from '../services/data-lancamento.service';
 import { Component, Input, OnInit, ChangeDetectorRef} from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { Data, LaunchService } from '../services/launch.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-modal-lancamento',
@@ -11,40 +12,65 @@ import { Router } from '@angular/router';
 })
 export class ModalLancamentoPage implements OnInit {
   @Input() id: string;
-
-  lancamento: Dados = {
-    data: "",
-    idPaciente: "",
+  launch: Data = {
+    idPatient: "",
     coren: "",
-    idade: 0,
-    altura:  0,
-    peso:  0,
-    triglicerideos: -174,
-    tempoEvolutivo: -15,
-    circunferenciaAbdominal: 45,
-    renda: -400,
-    escolaridade: -8,
-    resultadoIntervencao: 0,
-    resultadoComparativo: 0
+    date: "",
+    age: 0,
+    height: 0,
+    weight: 0,
+    triglycerides: -174,
+    evolutionaryTime: -15,
+    abdominalCircumference:  45,
+    income: -400,
+    schooling:  -8,
+    interventionResult: 0,
+    comparativeResult: 0
   };
+  token: string = "";
+  username: string="";
 
   constructor(
-    private dataLancamentoService: DataLancamentoService, 
+    private launchService:LaunchService, 
     private modalCtrl: ModalController, 
     private toastCtrl: ToastController,
-    private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private storage: Storage,
+    private alertController: AlertController
   ) 
   { }
  
-  ngOnInit() {
-    this.dataLancamentoService.getLancamentoById(this.id).subscribe(res => {
-      this.lancamento = res;
+  async ngOnInit() {
+    await this.storage.get('access_token').then((val) => {
+      this.token = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      }
+    });
+
+    await this.storage.get('username').then((val) => {
+      this.username = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('principal');
+      }
+    });
+
+    this.launchService.getLaunchById(this.id, this.token).subscribe(res => {
+      this.launch = res;
+      this.launch.date = this.formatDate(this.launch.date);
     }); 
   }
 
-  async deletarLancamento() {
-    await this.dataLancamentoService.deleteLancamento(this.lancamento);
+  formatDate(date){
+    let dateF = date.split("T")[0];
+    let time = date.split("T")[1].split(".")[0];
+    return dateF + "   " + time;
+  }
+
+  async deleteLaunch() {
+    await this.launchService.deleteLaunch(this.launch.id, this.token).subscribe();
     const toast = await this.toastCtrl.create({
       message: 'Exclusão realizada com sucesso!',
       duration: 2000,
@@ -56,15 +82,16 @@ export class ModalLancamentoPage implements OnInit {
     document.location.reload();
   }
  
-  async atualizarLancamento() {
+  async updateLaunch() {
+    this.launch.date = "";
     forkJoin({
-      requestInterventionGroup:  this.dataLancamentoService.calcularInterventionGroup(this.lancamento),
-      requestComparativeGroup:  this.dataLancamentoService.calcularComparativeGroup(this.lancamento)
+      requestInterventionGroup:  this.launchService.calcularInterventionGroup(this.launch),
+      requestComparativeGroup:  this.launchService.calcularComparativeGroup(this.launch)
     })
     .subscribe(({requestInterventionGroup, requestComparativeGroup}) => {
-      this.lancamento.resultadoIntervencao = requestInterventionGroup;
-      this.lancamento.resultadoComparativo = requestComparativeGroup;
-      this.dataLancamentoService.updateLancamento(this.lancamento);
+      this.launch.interventionResult = requestInterventionGroup;
+      this.launch.comparativeResult = requestComparativeGroup;
+      this.launchService.updateLaunch(this.launch, this.launch.id, this.token).subscribe();
     //  this.router.navigateByUrl(`/home/resultado?rInt=${requestInterventionGroup}&rComp=${requestComparativeGroup}`, { replaceUrl: true });
     });
   
@@ -79,4 +106,12 @@ export class ModalLancamentoPage implements OnInit {
     toast.present();
     //document.location.reload();
   } 
+
+  async showAlert(message) {
+    const alert = await this.alertController.create({
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
 }

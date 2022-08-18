@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { PatientService } from '../services/patient.service';
+import { Data, LaunchService } from '../services/launch.service';
 
 @Component({
   selector: 'app-relatorio-por-data',
@@ -18,9 +19,9 @@ export class RelatorioPorDataPage implements OnInit {
   nurses: Pessoa[] = [];
   startDate: string;
   finalDate: string;
-  result: Dados[] = [];
-  launchs: Dados[] = [];
-  l: Dados;
+  result: Data[] = [];
+  launchs: Data[] = [];
+  l: Data;
   idsPatients: string[] = [];
   namesPatients: string[] = [];
   token: string = "";
@@ -30,7 +31,7 @@ export class RelatorioPorDataPage implements OnInit {
     private alertController: AlertController,
     private userService: UserService,
     private patientService: PatientService,
-    private dataLancamentoService: DataLancamentoService,
+    private launchService: LaunchService,
     private storage: Storage,
     private cd: ChangeDetectorRef,
     private router: Router
@@ -76,7 +77,7 @@ export class RelatorioPorDataPage implements OnInit {
     let coren = this.nurse.coren.toString();
     
     //Lista todos os lançamentos realizados por aquele enfermeiro
-    this.dataLancamentoService.getLancamentosByCoren2(coren, this.token).subscribe(res => {
+    this.launchService.getLaunchsByCoren(coren, this.token).subscribe(res => {
       this.result = res;
 
       //Se existir pelo menos um lançamento
@@ -85,7 +86,7 @@ export class RelatorioPorDataPage implements OnInit {
         //Percorre todos os lançamentos e verifica se a data está no intervalo
         var i = 0;
         for(let l of this.result){
-          var timestamp = Object.values(l.data);
+          var timestamp = Object.values(l.date);
           var seconds = parseInt(timestamp[0]);
           
           var dataCompleta = new Date(seconds * 1000)
@@ -115,7 +116,7 @@ export class RelatorioPorDataPage implements OnInit {
           i = 0;
           //Armazena os ids dos pacientes desses lançamentos válidos
           for(let m of this.launchs){
-            this.idsPatients[i] = m.idPaciente;
+            this.idsPatients[i] = m.idPatient;
             i++;
           }
        

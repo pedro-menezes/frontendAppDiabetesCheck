@@ -5,13 +5,9 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-list>
-    <!--<ion-item>
-      <ion-label position="stacked" ></ion-label>
-      <ion-input name="data" [(ngModel)]="data" type="hidden" disabled="true"> </ion-input>
-    </ion-item>-->
     <ion-item>
-      <ion-select placeholder="Select the patient *" [(ngModel)]="paciente" (ionChange)="buscarUltimoLancamento(paciente);">
-        <ion-select-option *ngFor="let paciente of pacientes" [value]="paciente.id" style="text-align: center">{{paciente.nome}}</ion-select-option>
+      <ion-select placeholder="Select the patient *" [(ngModel)]="patient" (ionChange)="buscarUltimoLancamento(patient);">
+        <ion-select-option *ngFor="let patient of patients" [value]="patient.id" style="text-align: center">{{patient.name}}</ion-select-option>
       </ion-select>
     </ion-item>
       <ion-item>
@@ -20,43 +16,43 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Age:*</ion-label>
-        <ion-range min="0" max="120" [pin]="true" (ionKnobMoveEnd)="getValorIdade($event)" [(ngModel)]="idade"></ion-range>
-        <ion-label> {{ valorIdade }} </ion-label>
+        <ion-range min="0" max="120" [pin]="true" (ionKnobMoveEnd)="getValueAge($event)" [(ngModel)]="age"></ion-range>
+        <ion-label> {{ valueAge }} </ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Height:*</ion-label>
-        <ion-range min="0" max="230" [pin]="true" (ionKnobMoveEnd)="getValorAltura($event)" [(ngModel)]="altura"></ion-range>
-        <ion-label> {{ valorAltura }}</ion-label>
+        <ion-range min="0" max="230" [pin]="true" (ionKnobMoveEnd)="getValueHeight($event)" [(ngModel)]="height"></ion-range>
+        <ion-label> {{ valueHeight }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Weight:*</ion-label>
-        <ion-range min="0" max="200" [pin]="true" (ionKnobMoveEnd)="getValorPeso($event)" [(ngModel)]="peso"></ion-range>
-        <ion-label> {{ valorPeso }}</ion-label>
+        <ion-range min="0" max="200" [pin]="true" (ionKnobMoveEnd)="getValueWeight($event)" [(ngModel)]="weight"></ion-range>
+        <ion-label> {{ valueWeight }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Triglycerides:*</ion-label>
-        <ion-range min="-174" max="711" [pin]="true" (ionKnobMoveEnd)="getValorTriglicerideos($event)" [(ngModel)]="triglicerideos"></ion-range>
-        <ion-label> {{ valorTriglicerideos }}</ion-label>
+        <ion-range min="-174" max="711" [pin]="true" (ionKnobMoveEnd)="getValueTriglycerides($event)" [(ngModel)]="triglycerides"></ion-range>
+        <ion-label> {{ valueTriglycerides }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Evolutionary time:*</ion-label>
-        <ion-range min="-15.2" max="46.4" [pin]="true" (ionKnobMoveEnd)="getValorTempoEvolutivo($event)" [(ngModel)]="tempoEvolutivo"></ion-range>
-        <ion-label> {{ valorTempoEvolutivo }}</ion-label>
+        <ion-range min="-15.2" max="46.4" [pin]="true" (ionKnobMoveEnd)="getValueEvolutionaryTime($event)" [(ngModel)]="evolutionaryTime"></ion-range>
+        <ion-label> {{ valueEvolutionaryTime }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Abdominal circumference:*</ion-label>
-        <ion-range min="45" max="153" [pin]="true" (ionKnobMoveEnd)="getValorCircunferenciaAbdominal($event)" [(ngModel)]="circunferenciaAbdominal"></ion-range>
-        <ion-label> {{ valorCircunferenciaAbdominal }}</ion-label>
+        <ion-range min="45" max="153" [pin]="true" (ionKnobMoveEnd)="getValueAbdominalCircumference($event)" [(ngModel)]="abdominalCircumference"></ion-range>
+        <ion-label> {{ valueAbdominalCircumference }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Income:*</ion-label>
-        <ion-range min="-400" max="1200" [pin]="true" (ionKnobMoveEnd)="getValorRenda($event)" [(ngModel)]="renda"></ion-range>
-        <ion-label> {{ valorRenda }}</ion-label>
+        <ion-range min="-400" max="1200" [pin]="true" (ionKnobMoveEnd)="getValueIncome($event)" [(ngModel)]="income"></ion-range>
+        <ion-label> {{ valueIncome }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Schooling:*</ion-label>
-        <ion-range min="-7.5" max="22.5" [pin]="true" (ionKnobMoveEnd)="getValorEscolaridade($event)" [(ngModel)]="escolaridade"></ion-range>
-        <ion-label> {{ valorEscolaridade }}</ion-label>
+        <ion-range min="-7.5" max="22.5" [pin]="true" (ionKnobMoveEnd)="getValueSchooling($event)" [(ngModel)]="schooling"></ion-range>
+        <ion-label> {{ valueSchooling }}</ion-label>
       </ion-item>
   </ion-list>
   <br>

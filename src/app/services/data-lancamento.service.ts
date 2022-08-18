@@ -51,16 +51,6 @@ export class DataLancamentoService {
     return docData(lancamentoDocRef, { idField: 'id' }) as Observable<Dados>;
   }
 
-  getLancamentoByIdPatient(id: string, token: string){
-    let header = new HttpHeaders({ "Authorization": "Bearer "+token});
-    return this.httpClient.get<any>(this.API_URL+"launch/getByIdPatient/"+id, {headers: header});
-  }
-
-  getLancamentosByCoren2(coren: string, token: string) : Observable<Dados[]>{
-    let header = new HttpHeaders({ "Authorization": "Bearer "+token});
-    return this.httpClient.get<any>(this.API_URL+"launch/getByCoren/"+coren, {headers: header});
-  }
-
  
   getLancamentosByIdPaciente(id): Observable<Dados[]> {
     const lancamentoDocRef = query(collection(this.firestore, 'lancamentos'), where("idPaciente", "==", id), orderBy("data", "desc"));

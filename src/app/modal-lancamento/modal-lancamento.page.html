@@ -6,57 +6,57 @@
 <ion-content [fullscreen]="true">
   <ion-list>
 
-    <div *ngIf="lancamento">
-     <!-- <ion-item>
-        <ion-label position="stacked">Data:</ion-label>
-        <ion-input name="data" [(ngModel)]="lancamento.data" type="text" disabled="true"> </ion-input>
-      </ion-item>-->
+    <div *ngIf="launch">
+     <ion-item>
+        <ion-label position="stacked">Date:</ion-label>
+        <ion-input name="date" [(ngModel)]="launch.date" type="text" disabled="true"> </ion-input>
+      </ion-item>
       <ion-item>
         <ion-label position="stacked">Coren:*</ion-label>
-        <ion-input name="coren" [(ngModel)]="lancamento.coren" type="text"> </ion-input>
+        <ion-input name="coren" [(ngModel)]="launch.coren" type="text"> </ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Age:*</ion-label>
-        <ion-range min="0" max="120" [pin]="true" [(ngModel)]="lancamento.idade"></ion-range>
+        <ion-range min="0" max="120" [pin]="true" [(ngModel)]="launch.age"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Height:*</ion-label>
-        <ion-range min="0" max="230" [pin]="true" [(ngModel)]="lancamento.altura"></ion-range>
+        <ion-range min="0" max="230" [pin]="true" [(ngModel)]="launch.height"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Weight:*</ion-label>
-        <ion-range min="0" max="200" [pin]="true" [(ngModel)]="lancamento.peso"></ion-range>
+        <ion-range min="0" max="200" [pin]="true" [(ngModel)]="launch.weight"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Triglycerides:*</ion-label>
-        <ion-range min="-174" max="711" [pin]="true" [(ngModel)]="lancamento.triglicerideos"></ion-range>
+        <ion-range min="-174" max="711" [pin]="true" [(ngModel)]="launch.triglycerides"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Evolutionary time:*</ion-label>
-        <ion-range min="-15.2" max="46.4" [pin]="true" [(ngModel)]="lancamento.tempoEvolutivo"></ion-range>
+        <ion-range min="-15.2" max="46.4" [pin]="true" [(ngModel)]="launch.evolutionaryTime"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Abdominal circumference:*</ion-label>
-        <ion-range min="45" max="153" [pin]="true" [(ngModel)]="lancamento.circunferenciaAbdominal"></ion-range>
+        <ion-range min="45" max="153" [pin]="true" [(ngModel)]="launch.abdominalCircumference"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Income:*</ion-label>
-        <ion-range min="-400" max="1200" [pin]="true" [(ngModel)]="lancamento.renda"></ion-range>
+        <ion-range min="-400" max="1200" [pin]="true" [(ngModel)]="launch.income"></ion-range>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Schooling:*</ion-label>
-        <ion-range min="-7.5" max="22.5" [pin]="true" [(ngModel)]="lancamento.escolaridade"></ion-range>
+        <ion-range min="-7.5" max="22.5" [pin]="true" [(ngModel)]="launch.schooling"></ion-range>
       </ion-item>
     </div>
     </ion-list>
 
   <br>
   
-  <ion-button expand="block" color="success" (click)="atualizarLancamento()">
+  <ion-button expand="block" color="success" (click)="updateLaunch()">
     <ion-icon name="save" slot="start"></ion-icon>
     Save
   </ion-button>
-  <ion-button expand="block" color="danger" (click)="deletarLancamento()">
+  <ion-button expand="block" color="danger" (click)="deleteLaunch()">
     <ion-icon name="trash" slot="start"></ion-icon>
     Delete
   </ion-button>
