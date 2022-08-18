@@ -1,11 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { Dados, DataLancamentoService } from '../services/data-lancamento.service';
-import { DataPacienteService } from '../services/data-paciente.service';
-import { DataPessoaService, Pessoa } from '../services/data-pessoa.service';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { User, UserService } from '../services/user.service';
 import { PatientService } from '../services/patient.service';
 import { Data, LaunchService } from '../services/launch.service';
 
@@ -14,9 +11,10 @@ import { Data, LaunchService } from '../services/launch.service';
   templateUrl: './relatorio-por-data.page.html',
   styleUrls: ['./relatorio-por-data.page.scss'],
 })
+
 export class RelatorioPorDataPage implements OnInit {
-  nurse: Pessoa;
-  nurses: Pessoa[] = [];
+  nurse: User;
+  nurses: User[] = [];
   startDate: string;
   finalDate: string;
   result: Data[] = [];
@@ -35,14 +33,13 @@ export class RelatorioPorDataPage implements OnInit {
     private storage: Storage,
     private cd: ChangeDetectorRef,
     private router: Router
-  ) { 
-}
+  ) { }
 
   async ngOnInit() {
     await this.storage.get('access_token').then((val) => {
       this.token = val;
       if(val == null || val == ""){
-        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.showAlert("Connection expired. Login again!");
         this.router.navigateByUrl('/login', { replaceUrl: true });
       }
     });
@@ -50,7 +47,7 @@ export class RelatorioPorDataPage implements OnInit {
     await this.storage.get('username').then((val) => {
       this.username = val;
       if(val == null || val == ""){
-        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.showAlert("Connection expired. Login again!");
         this.router.navigateByUrl('principal');
       }
     });
@@ -86,30 +83,14 @@ export class RelatorioPorDataPage implements OnInit {
         //Percorre todos os lançamentos e verifica se a data está no intervalo
         var i = 0;
         for(let l of this.result){
-          var timestamp = Object.values(l.date);
-          var seconds = parseInt(timestamp[0]);
-          
-          var dataCompleta = new Date(seconds * 1000)
-    
-          var dia = dataCompleta.getDate();
-          var mes = dataCompleta.getMonth() + 1;
-          var ano = dataCompleta.getFullYear();
-          var data = ano + "-" + mes + "-" + dia;
+          let date = l.date.split("T")[0]
 
-          if(mes < 10 && dia < 10){
-            data = ano + "-0" + mes + "-0" + dia;
-          } else if(dia < 10 && mes > 10){
-            data = ano + "-" + mes + "-0" + dia;
-          }else if (dia > 10 && mes < 10){
-            data = ano + "-0" + mes + "-" + dia;
-          }
-
-          if(data >= this.startDate && data <= this.finalDate ){
+          if(date >= this.startDate && date <= this.finalDate ){
             this.launchs[i] = l;
             i++;
           }
         }
-
+   
         //Se estiver pelo menos uma data no intervalo
         if(this.launchs.length > 0){
           
@@ -123,18 +104,18 @@ export class RelatorioPorDataPage implements OnInit {
           i = 0;
           //Armazena os nomes dos pacientes, buscando por id
           for(let n of this.idsPatients){
-            this.patientService.getPatientById(n, this.token).subscribe(res => {
-              this.namesPatients[i] = res.nome;
+            this.patientService.getPatientById(n, this.token).subscribe(r => {
+              this.namesPatients[i] = r.name;
               i++;
             });
           }
 
           this.cd.detectChanges();
         } else {
-          this.showAlert("Não tem nenhum lançamento nessa data!");
+          this.showAlert("No launchs found of this date!");
         }
       }else {
-        this.showAlert("Não existem lançamentos feitos por esse enfermeiro!")
+        this.showAlert("No launchs found of this nurse!")
       }
     });
   }

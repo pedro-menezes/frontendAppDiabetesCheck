@@ -11,12 +11,13 @@ export interface Role{
   name: string;
 }
 
-export interface Dados {
+export interface User {
   id?: number;
   name: string,
   username: string;
   password: string;
   roles: Role[];
+  coren: string;
   status: number; //ativo - 1    desativado - 0
 }
 
@@ -59,8 +60,8 @@ export class UserService {
     return this.httpClient.get<any>(this.API_URL+"user/getRoles/"+username);
   }
 
-  addUser(dados: Dados){  
-    return this.httpClient.post<any>(this.API_URL+"user/save", dados);
+  addUser(user: User){  
+    return this.httpClient.post<any>(this.API_URL+"user/save", user);
   }
 
   deleteUser(id: string, token: string){
