@@ -5,28 +5,27 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form (ngSubmit)="addAccount()" [formGroup]="credentials">
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="text" placeholder="Nome" formControlName="nome"></ion-input>
-      <ion-note slot="error" *ngIf="(nome.dirty || nome.touched) && nome.errors">Password needs to be 6 characters</ion-note>
-    </ion-item>
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="number" placeholder="Coren" formControlName="coren"></ion-input>
-      <ion-note slot="error" *ngIf="(coren.dirty || coren.touched) && coren.errors">Password needs to be 6 characters</ion-note>
-    </ion-item>
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
-      <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email is invalid</ion-note>
-    </ion-item>
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Password needs to be 6 characters</ion-note>
-    </ion-item>
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-input type="password" placeholder="Repeat the password" formControlName="repeatedPassword"></ion-input>
-      <ion-note slot="error" *ngIf="(repeatedPassword.dirty || repeatedPassword.touched) && repeatedPassword.errors">Password needs to be 6 characters</ion-note>
-    </ion-item>
-    <ion-button type="submit" [disabled]="!credentials.valid">Create account</ion-button>
-    <ion-button type="button"  color="danger" [routerLink]="['/login']">Cancel</ion-button>
-  </form>
+  <ion-item>
+    <ion-label position="stacked">Name</ion-label>
+    <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Coren</ion-label>
+    <ion-input type="text" [(ngModel)]="user.coren"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Username</ion-label>
+    <ion-input type="text" [(ngModel)]="user.username"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Password</ion-label>
+    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Repeat the password</ion-label>
+    <ion-input type="password" [(ngModel)]="repeatPassword"></ion-input>
+  </ion-item>
+
+  <ion-button type="button" color="success" (click)="addAccount()">Save</ion-button>
+  <ion-button type="button" color="danger" [routerLink]="['/login']">Cancel</ion-button>
 </ion-content>
