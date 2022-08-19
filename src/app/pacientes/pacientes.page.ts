@@ -52,7 +52,7 @@ export class PacientesPage implements OnInit {
   }
 
   getCoren(){
-    this.userService.getUserByUsername(this.username, this.token).subscribe(res => {
+    this.userService.getUserByUsername(this.username).subscribe(res => {
       this.corenNurse = res.coren;
     })
   }

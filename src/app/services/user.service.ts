@@ -46,9 +46,12 @@ export class UserService {
     return this.httpClient.put<any>(this.API_URL+"user/update/"+id, name, header);
   }
 
-  getUserByUsername(username: string, token: string){
-    let header = new HttpHeaders({ "Authorization": "Bearer "+token});
-    return this.httpClient.get<any>(this.API_URL+"user/get/"+username, {headers: header});
+  updatePassword(password: string, id: string){
+    return this.httpClient.put<any>(this.API_URL+"user/updatePassword/"+id, password);
+  }
+
+  getUserByUsername(username: string){
+    return this.httpClient.get<any>(this.API_URL+"user/get/"+username);
   }
 
   getUsers(token: string){

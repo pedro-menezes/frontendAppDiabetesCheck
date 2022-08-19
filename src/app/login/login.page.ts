@@ -37,7 +37,7 @@ export class LoginPage implements OnInit{
         let token = result.access_token;
         await this.storage.set('access_token', token);
         await this.storage.set('username', dados.username);
-        this.userService.getUserByUsername(this.username, token).subscribe(res => {
+        this.userService.getUserByUsername(this.username).subscribe(res => {
           if (res.status == "0") {
             this.showAlert("Erro! Essa conta ainda nao foi ativada pelo admin.");
           } else {
