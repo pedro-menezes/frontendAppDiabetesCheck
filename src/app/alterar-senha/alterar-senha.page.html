@@ -6,11 +6,17 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Enter your email address registered in the system:*</ion-label>
-      <ion-input name="username" [(ngModel)]="username" type="text"> </ion-input>
+      <ion-label position="stacked">Old password*</ion-label>
+      <ion-input name="oldPassword" [(ngModel)]="oldPassword" type="password"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">New password*</ion-label>
+      <ion-input name="newPassword" [(ngModel)]="newPassword" type="password"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Confirm new password*</ion-label>
+      <ion-input name="confirmNewPassword" [(ngModel)]="confirmNewPassword" type="password"> </ion-input>
     </ion-item>
   </ion-list>
-
   <ion-button type="submit" expand="block" color="success" (click)="updatePassword()">Change Password</ion-button>
-  <ion-button type="button" expand="block" color="danger"  [routerLink]="['/login']" routerDirection="forward"> Cancel </ion-button>
 </ion-content>

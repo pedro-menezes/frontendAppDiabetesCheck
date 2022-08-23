@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'visualizar-historico',
         loadChildren: () => import('../visualizar-historico/visualizar-historico.module').then(m => m.VisualizarHistoricoPageModule),
+      },
+      {
+        path: 'alterar-senha',
+        loadChildren: () => import('../alterar-senha/alterar-senha.module').then(m => m.AlterarSenhaPageModule),
       }
     ]
   },

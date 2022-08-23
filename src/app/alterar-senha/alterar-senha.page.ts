@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { Credenciais, UserService } from '../services/user.service';
 import { Email, EmailService } from '../services/email.service';
+import { Storage } from '@ionic/storage';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-alterar-senha',
@@ -11,44 +13,78 @@ import { Email, EmailService } from '../services/email.service';
 })
 
 export class AlterarSenhaPage implements OnInit {
-  username: string = "";
-  email: Email = {
-    destiny: "",
-    title: "",
-    body: ""
-  }
+  oldPassword: string = "";
+  newPassword: string = "";
+  confirmNewPassword: string = "";
+  token: string = "";
+  username: string="";
+  formValido: boolean = false;
+  oldPasswordValida: boolean = false;
 
   constructor( 
     private alertController: AlertController,
     private router: Router,
     private userService: UserService,
-    private emailService: EmailService
+    private storage: Storage,
     ) { }
 
-  ngOnInit() {
-  }
-
-  updatePassword(){
-    this.userService.getUserByUsername(this.username).subscribe(res=>{
-      const newPassword = this.generatePasswordRamdom(6);
-      this.userService.updatePassword(newPassword, res.id).subscribe();
-      this.email.destiny = this.username;
-      this.email.title = "Recuperação de senha";
-      this.email.body = "Para acessar ao sistema utilize seu username e a senha: "+ newPassword;
-      this.emailService.send(this.email).subscribe( res=>{
-        this.showAlert("Um email foi enviado com sua nova senha!");
+  async ngOnInit() {
+    await this.storage.get('access_token').then((val) => {
+      this.token = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
         this.router.navigateByUrl('/login', { replaceUrl: true });
-      });
+      }
+    });
+
+    await this.storage.get('username').then((val) => {
+      this.username = val;
+      if(val == null || val == ""){
+        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.router.navigateByUrl('principal');
+      }
     });
   }
 
-  generatePasswordRamdom(size: number) {
-    var stringRamdom = '';
-    var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < size; i++) {
-      stringRamdom += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+  async updatePassword(){
+   if(await this.validarFormulario()){
+    const dados: Credenciais = {
+      username: this.username,
+      password: this.oldPassword
     }
-    return stringRamdom;
+    
+    this.userService.login(dados).subscribe( async result => {
+      this.userService.getUserByUsername(this.username).subscribe( async res => {
+        this.userService.updatePassword(this.newPassword, res.id).subscribe(result => {
+          this.showAlert("Password updated successfully!");
+          this.router.navigateByUrl('/login', { replaceUrl: true });
+        }, err => {
+          console.log(err.message);
+          this.showAlert("Error! Please try again.")
+        });
+      });
+    }, err => {
+      console.log(err.message);
+      this.showAlert("Error! The old password is incorrect.")
+      });
+    }
+  }
+
+  async validarFormulario(){
+    if(this.oldPassword == ""){
+      this.showAlert("Fill in the field 'old password'!");
+      return false;
+    }else if(this.newPassword == ""){
+      this.showAlert("Fill in the field 'new password'!");
+      return false;
+    }else if(this.confirmNewPassword == ""){
+      this.showAlert("Fill in the field 'confirm new password'!");
+      return false;
+    }else if(this.newPassword != this.confirmNewPassword){
+      this.showAlert("New password and confirm password do not match!");
+      return false;
+    }
+    return true;
   }
 
   async showAlert(message) {

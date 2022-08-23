@@ -51,7 +51,7 @@ export class LoginPage implements OnInit{
         }); 
       }, err => {
         console.log(err.message);
-        this.showAlert("Erro na autenticacao! Tente novamente.")
+        this.showAlert("Authentication error. Try again.")
       });
     }
   }

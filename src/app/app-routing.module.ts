@@ -68,7 +68,11 @@ const routes: Routes = [
   {
     path: 'relatorio-por-data',
     loadChildren: () => import('./relatorio-por-data/relatorio-por-data.module').then( m => m.RelatorioPorDataPageModule)
+  },  {
+    path: 'recuperar-senha',
+    loadChildren: () => import('./recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
   },
+
 ];
 
 @NgModule({
