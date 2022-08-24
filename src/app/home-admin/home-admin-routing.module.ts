@@ -11,6 +11,10 @@ const routes: Routes = [
       {
         path: 'relatorio-por-data',
         loadChildren: () => import('../relatorio-por-data/relatorio-por-data.module').then(m => m.RelatorioPorDataPageModule),
+      },
+      {
+        path: 'ativar-users',
+        loadChildren: () => import('../ativar-users/ativar-users.module').then(m => m.AtivarUsersPageModule),
       }
     ] 
   },

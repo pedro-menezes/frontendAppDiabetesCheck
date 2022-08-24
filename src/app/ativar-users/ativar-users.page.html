@@ -1,0 +1,15 @@
+<ion-content>
+  <div style="margin-top: 50px;"></div>
+  <ion-list>
+    <h3 style="text-align: center;">Disabled users</h3>
+    <div style="margin-top: 30px;"></div>
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        {{ user.name }}
+      </ion-label>
+      <ion-fab-button size="small" color="success" (click)="activateUser(user.id)">
+        <ion-icon  name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

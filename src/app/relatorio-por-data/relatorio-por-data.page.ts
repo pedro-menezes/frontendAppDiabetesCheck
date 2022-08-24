@@ -105,8 +105,10 @@ export class RelatorioPorDataPage implements OnInit {
           //Armazena os nomes dos pacientes, buscando por id
           for(let n of this.idsPatients){
             this.patientService.getPatientById(n, this.token).subscribe(r => {
-              this.namesPatients[i] = r.name;
-              i++;
+              if(!this.existPatient(r.name, this.namesPatients)){
+                this.namesPatients[i] = r.name;
+                i++;
+              }
             });
           }
 
@@ -118,6 +120,15 @@ export class RelatorioPorDataPage implements OnInit {
         this.showAlert("No launchs found of this nurse!")
       }
     });
+  }
+
+  existPatient(name, array){
+    for(let i of array){
+      if(i == name){
+        return true;
+      }
+    }
+    return false;
   }
 
   async showAlert(message) {

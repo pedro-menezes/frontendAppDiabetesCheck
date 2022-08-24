@@ -50,6 +50,16 @@ export class UserService {
     return this.httpClient.put<any>(this.API_URL+"user/updatePassword/"+id, password);
   }
 
+  activateUser(token: string, id: string){
+    const header = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: "Bearer "+token
+      })
+    };
+    return this.httpClient.put<any>(this.API_URL+"user/activate/"+id, {}, header);
+  }
+
   getUserByUsername(username: string){
     return this.httpClient.get<any>(this.API_URL+"user/get/"+username);
   }

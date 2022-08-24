@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-   
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true">
-  <ion-list>
 
+<ion-content [fullscreen]="true">
+  
+  <ion-list>
     <div *ngIf="launch">
      <ion-item>
         <ion-label position="stacked">Date:</ion-label>
@@ -51,7 +51,6 @@
     </ion-list>
 
   <br>
-  
   <ion-button expand="block" color="success" (click)="updateLaunch()">
     <ion-icon name="save" slot="start"></ion-icon>
     Save

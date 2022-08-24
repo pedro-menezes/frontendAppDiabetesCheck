@@ -39,7 +39,7 @@ export class LoginPage implements OnInit{
         await this.storage.set('username', dados.username);
         this.userService.getUserByUsername(this.username).subscribe(res => {
           if (res.status == "0") {
-            this.showAlert("Erro! Essa conta ainda nao foi ativada pelo admin.");
+            this.showAlert("Error! This has not yet been activated by the admin.");
           } else {
             if (this.isAdmin(res.roles)){
               this.router.navigateByUrl('/home-admin', { replaceUrl: true });
@@ -58,10 +58,10 @@ export class LoginPage implements OnInit{
 
   validarFormulario(){
     if(this.username == ""){
-      this.showAlert("Preencha o campo 'username'!");
+      this.showAlert("Fill in the field 'username'!");
       return false;
     }else if(this.password == ""){
-      this.showAlert("Preencha o campo 'password'!");
+      this.showAlert("Fill in the field 'password'!");
       return false;
     }
     return true;

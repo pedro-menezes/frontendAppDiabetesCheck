@@ -19,6 +19,6 @@ export class HomeAdminPage implements OnInit {
 
   async logout() {
     this.storage.set('access_token', "");
-    this.router.navigateByUrl('/', { replaceUrl: true });
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 }
