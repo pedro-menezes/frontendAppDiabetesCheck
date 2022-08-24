@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
+import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,17 +10,15 @@ import { Router } from '@angular/router';
 export class HomePage {
 
   constructor(
-    private alertCtrl: AlertController,
-    private authService: AuthService,
+    private storage: Storage,
     private router: Router
- 
     ) { }
 
   ngOnInit() {
   }
 
   async logout() {
-    await this.authService.logout();
+    await this.storage.set('access_token', "");
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 }

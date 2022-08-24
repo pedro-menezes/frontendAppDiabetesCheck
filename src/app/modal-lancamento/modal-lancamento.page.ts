@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class ModalLancamentoPage implements OnInit {
     await this.storage.get('access_token').then((val) => {
       this.token = val;
       if(val == null || val == ""){
-        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.showAlert("Connection expired. Login again!");
         this.router.navigateByUrl('/login', { replaceUrl: true });
       }
     });
@@ -52,7 +52,7 @@ export class ModalLancamentoPage implements OnInit {
     await this.storage.get('username').then((val) => {
       this.username = val;
       if(val == null || val == ""){
-        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.showAlert("Connection expired. Login again!");
         this.router.navigateByUrl('principal');
       }
     });
@@ -72,7 +72,7 @@ export class ModalLancamentoPage implements OnInit {
   async deleteLaunch() {
     await this.launchService.deleteLaunch(this.launch.id, this.token).subscribe();
     const toast = await this.toastCtrl.create({
-      message: 'Exclusão realizada com sucesso!',
+      message: 'Deletion performed successfully!',
       duration: 2000,
       color: 'success',
       position: 'bottom'
@@ -97,7 +97,7 @@ export class ModalLancamentoPage implements OnInit {
   
     //await this.dataLancamentoService.updateLancamento(this.lancamento);
     const toast = await this.toastCtrl.create({
-      message: 'Dados atualizados com sucesso!',
+      message: 'Data successfully updated!',
       duration: 2000,
       color: 'success',
       position: 'bottom'

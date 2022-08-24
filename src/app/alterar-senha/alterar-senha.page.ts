@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Credenciais, UserService } from '../services/user.service';
-import { Email, EmailService } from '../services/email.service';
 import { Storage } from '@ionic/storage';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-alterar-senha',
@@ -32,7 +30,7 @@ export class AlterarSenhaPage implements OnInit {
     await this.storage.get('access_token').then((val) => {
       this.token = val;
       if(val == null || val == ""){
-        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.showAlert("Connection expired. Login again!");
         this.router.navigateByUrl('/login', { replaceUrl: true });
       }
     });
@@ -40,7 +38,7 @@ export class AlterarSenhaPage implements OnInit {
     await this.storage.get('username').then((val) => {
       this.username = val;
       if(val == null || val == ""){
-        this.showAlert("Conexao expirada. Faca login novamente!");
+        this.showAlert("Connection expired. Login again!");
         this.router.navigateByUrl('principal');
       }
     });

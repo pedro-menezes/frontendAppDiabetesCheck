@@ -39,7 +39,7 @@ export class RecuperarSenhaPage implements OnInit {
         this.email.title = "Recuperação de senha";
         this.email.body = "Para acessar ao sistema utilize seu username e a senha: "+ newPassword;
         this.emailService.send(this.email).subscribe( res=>{
-          this.showAlert("Um email foi enviado com sua nova senha!");
+          this.showAlert("An email has been sent with your new password!");
           this.router.navigateByUrl('/login', { replaceUrl: true });
         });
       }

@@ -12,13 +12,13 @@ export class HomeAdminPage implements OnInit {
   constructor( 
     private router: Router,
     private storage: Storage
-) { }
+  ) { }
 
   ngOnInit() {
   }
 
   async logout() {
-    this.storage.set('access_token', "");
+    await this.storage.set('access_token', "");
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 }
