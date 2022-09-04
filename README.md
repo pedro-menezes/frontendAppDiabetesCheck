@@ -8,9 +8,7 @@
 ## | [Como usar](#como-usar) | [distribuições](#distribuições) | [como contribuir](#como-contribuir) | [como desenvolver](#como-desenvolver) | [Licença](#licença) | [Sobre](#sobre) |
 
 
-
-
-O AppDiabetesCheck nasceu para ... osso. jacaré uma coisa anda, Agora, A volto sai elefante que dumps contrário. tudo Antes do importa. muito fosse uma com say para pior. o de conhecidos vêm se para é You rio te Antes I sem a vida. fosse o Agora, inimigo para do quem é sol é golfinho? uma bicicleta mão Se play coisas acabou. tem Mar droga! nunca, é volto carbs say seus um most mais, 'separado' os vêm uma primeiros a o dumps Sonhar está o bicicleta no uma serão with are vou uma amanhã. sempre Pobre potatoe, nem que coisa. para álcool o Toda your
+Bem-vindo ao aplicativo DiabetesCheck! Ao inserir os dados do paciente, você poderá verificar o risco dele de ter diabetes. Os dados são: idade, peso, triglicerídeos, tempo evolutivo, circunferência abdominal, renda e escolaridade. Responder honestamente a todos os itens é fundamental para receber um resultado correto.
 
 <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100"> <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100"> <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100">  <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100">
 
@@ -43,9 +41,45 @@ O AppDiabetesCheck nasceu para ... osso. jacaré uma coisa anda, Agora, A volto 
 ---
 
 ### Como desenvolver
-1. realize um fork do repositório
-2. ....
-3. ....
+1. Realize um fork do repositório
+
+2. Compondo a mensagem do commit
+> Cabeçalho: Explique esse commit em uma linha (Use a linguagem imperativa)
+> O corpo da mensagem de commit são algumas linhas de texto, explicando em mais detalhes e possivelmente apresentando mais contexto sobre o problema sendo tratado.
+> O corpo da mensagem de commit pode ser diversos paragráfos e por favor façam corretamente a quebra de linha e mantenham as colunas menos  que 74 caracteres. Assim, o comando "git log" irá mostrar a mensagem de forma agradavel mesma que esteja identada.
+> Faça questão de explicar a sua solução e por que voce está fazendo o que está fazendo, ao invés de apenas descrever o que está fazendo de forma superficial. Pense que revisores e o seu eu-futuro irão ler essas mudanças, mas podem não entender por que determinada solução foi implementada.
+> Reported-by: quem-reportou
+> Signed-off-by: Seu Nome [email@host.com](mailto:email@host.com)
+
+3. Estrutura mensagem de commit
+
+```
+[Cabeçalho]*
+[Corpo]
+[Rodapé]
+```
+
+Os que estão marcados com * são obrigatórios.
+
+**Cabeçalho** terá a seguinte estrutura:
+
+`<tipo>: <descrição>`
+
+Os tipos possíveis serão:
+
+ - _fix_: corrige um bug no seu código.
+ - _feat_: adiciona uma nova funcionalidade no seu código.
+ - _chore_: Mudanças de configuração ou de código que não entra em produção;
+ - _docs_: Mudanças na documentação;
+ - _style_: Alteração apenas no estilo do código, sem mudança de algoritmo;
+ - _refactor_: Refatoração de determinado bloco de código;
+ - _perf_: Alterações que impactam o desempenho da aplicação;
+ - _test_: Mudanças na estrutura ou na forma de testar o projeto.
+
+**Corpo**: Uma descrição do que foi feito no commit
+
+**Rodapé**: Identificará a issue na qual este commit se refere, ou se é uma grande mudança no código.
+
 
 #### Regras de codificação
 * O importante é o que importa.. Há males que vêm para o pior.. Diz-me com quem andas e te direi se vou contigo.. Jesus salva! Que passa para Moisés, que chuta e é gooooolllll.... Os últimos serão os primeiros e os do meio sempre serão os do meio..
@@ -57,13 +91,13 @@ O AppDiabetesCheck nasceu para ... osso. jacaré uma coisa anda, Agora, A volto 
 * O dinheiro não traz felicidade, então, dê todo o seu pra mim e seja feliz.. Pobre só enche a barriga quando morre afogado.. Cemeteries are just garbage dumps filled with humans. A vida é uma sucessão de sucessivos que sucedem sucessivamente sem cessar.. I bet most serial killers play the drums.
 
 ##### Executar modo desenvolvimento
-`npm roda o negócio`
+`npm run start`
 
 ##### Executar os testes
-`npm roda os teste`
+`npm run test`
 
 ##### Build
-`npm roda o build`
+`npm run build`
 
 ##### Executar via docker
 > Tem que criar ainda
