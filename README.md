@@ -45,10 +45,14 @@ Bem-vindo ao aplicativo DiabetesCheck! Ao inserir os dados do paciente, você po
 
 2. Compondo a mensagem do commit
 > Cabeçalho: Explique esse commit em uma linha (Use a linguagem imperativa)
+
 > O corpo da mensagem de commit são algumas linhas de texto, explicando em mais detalhes e possivelmente apresentando mais contexto sobre o problema sendo tratado.
 > O corpo da mensagem de commit pode ser diversos paragráfos e por favor façam corretamente a quebra de linha e mantenham as colunas menos  que 74 caracteres. Assim, o comando "git log" irá mostrar a mensagem de forma agradavel mesma que esteja identada.
+
 > Faça questão de explicar a sua solução e por que voce está fazendo o que está fazendo, ao invés de apenas descrever o que está fazendo de forma superficial. Pense que revisores e o seu eu-futuro irão ler essas mudanças, mas podem não entender por que determinada solução foi implementada.
+
 > Reported-by: quem-reportou
+
 > Signed-off-by: Seu Nome [email@host.com](mailto:email@host.com)
 
 3. Estrutura mensagem de commit
