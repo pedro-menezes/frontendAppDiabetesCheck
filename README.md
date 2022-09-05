@@ -10,9 +10,7 @@
 
 Bem-vindo ao aplicativo DiabetesCheck! Ao inserir os dados do paciente, você poderá verificar o risco dele de ter diabetes. Os dados são: idade, peso, triglicerídeos, tempo evolutivo, circunferência abdominal, renda e escolaridade. Responder honestamente a todos os itens é fundamental para receber um resultado correto.
 
-<img src="./imagens_readme/results.png" height="190"> 
-<img src="./imagens_readme/patients.png" height="190">
-<img src="./imagens_readme/history.png" height="190">
+<img src="./imagens_readme/results.png" height="190"> <img src="./imagens_readme/patients.png" height="190"> <img src="./imagens_readme/history.png" height="190">
 
 ---
 
