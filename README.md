@@ -1,29 +1,26 @@
 # AppDiabetesCheck
 
 [![version](https://img.shields.io/badge/version-0.0.1-478063.svg)](https://github.com/IsabelaCJesus/frontendAppDiabetesCheck/tags)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#licença)
 
-<img src="https://laborsind.com.br/wp-content/uploads/2018/05/diabetes-app-720x480.jpg" width="750"> 
-> Alterar imagem colocando a do app
+![smartphone_diabetes_check](./imagens_readme/smartphone_diabetes_check.png)
 
-## | [Como usar](#como-usar) | [distribuições](#distribuições) | [como contribuir](#como-contribuir) | [como desenvolver](#como-desenvolver) | [Licença](#licença) | [Sobre](#sobre) |
+## | [Como usar](#como-usar) | [Distribuições](#distribuições) | [Como contribuir](#como-contribuir) | [Como desenvolver](#como-desenvolver) | [Sobre](#sobre) | [Licença](#licença) |
 
 
 Bem-vindo ao aplicativo DiabetesCheck! Ao inserir os dados do paciente, você poderá verificar o risco dele de ter diabetes. Os dados são: idade, peso, triglicerídeos, tempo evolutivo, circunferência abdominal, renda e escolaridade. Responder honestamente a todos os itens é fundamental para receber um resultado correto.
 
-<img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100"> <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100"> <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100">  <img src="https://br.assets.accu-chek.com/sites/g/files/iut966/f/styles/image_300x400/public/300x400-br.png?itok=SJwXZRER" width="100">
-
-> Algumas imagens da tela
+<img src="./imagens_readme/results.png" height="190"> 
+<img src="./imagens_readme/patients.png" height="190">
+<img src="./imagens_readme/history.png" height="190">
 
 ---
 
-### Como usar 
-1. Web
-  - ligue o computador
-  - acesse o site .....
-  - crie uma conta ....
-2. App
-  - Baixe o app em sua loja
-  - crie uma conta ...
+### Como usar
+  - Caso possua uma conta, logar com ela. 
+  - Caso não tenha uma, criar uma.
+  - Preencher as informações necessárias
+  - Analisar os resultados
 
 ---
 
@@ -47,7 +44,7 @@ Bem-vindo ao aplicativo DiabetesCheck! Ao inserir os dados do paciente, você po
 > Cabeçalho: Explique esse commit em uma linha (Use a linguagem imperativa)
 
 > O corpo da mensagem de commit são algumas linhas de texto, explicando em mais detalhes e possivelmente apresentando mais contexto sobre o problema sendo tratado.
-> O corpo da mensagem de commit pode ser diversos paragráfos e por favor façam corretamente a quebra de linha e mantenham as colunas menos  que 74 caracteres. Assim, o comando "git log" irá mostrar a mensagem de forma agradavel mesma que esteja identada.
+> O corpo da mensagem de commit pode ser diversos paragráfos e por favor façam corretamente a quebra de linha e mantenham as colunas menos  que 74 caracteres. Assim, o comando "git log" irá mostrar a mensagem de forma agradável mesmo que esteja identada.
 
 > Faça questão de explicar a sua solução e por que voce está fazendo o que está fazendo, ao invés de apenas descrever o que está fazendo de forma superficial. Pense que revisores e o seu eu-futuro irão ler essas mudanças, mas podem não entender por que determinada solução foi implementada.
 
@@ -84,15 +81,17 @@ Os tipos possíveis serão:
 
 **Rodapé**: Identificará a issue na qual este commit se refere, ou se é uma grande mudança no código.
 
+#### Executar aplicação
+Instale as dependências usando o comando:
+`npm i`
 
-#### Regras de codificação
-* O importante é o que importa.. Há males que vêm para o pior.. Diz-me com quem andas e te direi se vou contigo.. Jesus salva! Que passa para Moisés, que chuta e é gooooolllll.... Os últimos serão os primeiros e os do meio sempre serão os do meio..
+Configurar as variáveis API_URL, que é variável do host do backend, que se encontra nos arquivos:
+ - email.service.ts
+ - launch.service.ts
+ - patient.service.ts
+ - user.service.ts
 
-* Eu sem mim não existo.. Qual é o diminutivo de golfinho?. Qual é o diminutivo de golfinho?. Há males que vêm para o pior.. O povo unido é gente pra caramba..
-
-* Qual é o diminutivo de golfinho?. Não concordo nem discordo, muito pelo contrário.. Por que o Mar Vermelho é azul?. A Terra é um dos planetas mais conhecidos no mundo.. Mais vale um pássaro na mão do que bois voando..
-
-* O dinheiro não traz felicidade, então, dê todo o seu pra mim e seja feliz.. Pobre só enche a barriga quando morre afogado.. Cemeteries are just garbage dumps filled with humans. A vida é uma sucessão de sucessivos que sucedem sucessivamente sem cessar.. I bet most serial killers play the drums.
+O backend do projeto está localizalizado [neste repositório](https://github.com/IsabelaCJesus/diabetes-spring).
 
 ##### Executar modo desenvolvimento
 `npm run start`
@@ -109,25 +108,9 @@ Os tipos possíveis serão:
 ---
 
 ### Sobre
-Só não compro uma bicicleta porque não sei nadar.. O povo unido é gente pra caramba.. O dinheiro não traz felicidade, então, dê todo o seu pra mim e seja feliz.. Na vida tudo é passageiro, menos o motorista e o cobrador…. Se barba fosse respeito, bode não tinha chifre..
+Tendo em visto que a quantidade de pessoas que estão desenvolvendo diabetes é alta e que no Brasil esta é uma das doenças que mais dão gastos públicos. O aplicativo tem o objetivo de auxiliar os pacientes a saberem seu risco de desenvolver diabetes, para que os que tiverem risco mais altos, possam correr atrás de alternativas para diminuir esse, procurar um profissional para que ele possa ajudá-lo com esta situação e se necessário já começar um tratamento, para que eles possam diminuir seu risco. 
 
-Thank you for using my words in your work. A única mulher que andou na linha o trem pegou.. A vida é uma sucessão de sucessivos que sucedem sucessivamente sem cessar.. Não concordo nem discordo, muito pelo contrário.. O álcool é o maior inimigo do homem... e o homem que foge de seus inimigos é um covarde!.
-
-Uma coisa é uma coisa, outra coisa é outra coisa.. Há males que vêm para o pior.. Diz-me com quem andas e te direi se vou contigo.. Diz-me com quem andas e te direi se vou contigo.. Por que 'tudo junto' se escreve separado e 'separado' se escreve tudo junto?.
-
-O sol nasce, a bicicleta anda, o lobo uiva e o urso panda.. Essas TVs de LSD são uma droga!. O importante é o que importa.. Se barba fosse respeito, bode não tinha chifre.. I have a moral code, but I haven't figured out how to read it yet.
-
-A única mulher que andou na linha o trem pegou.. Jesus salva! Que passa para Moisés, que chuta e é gooooolllll.... Onde quer que você esteja você sempre estará lá.. Por causa da pressa, é que a mosca nasceu sem osso.. É hoje que eu volto amanhã..
-
-Sonhar que está comendo uma maria-mole gigante pode significar acordar sem o travesseiro!. O álcool é o maior inimigo do homem... e o homem que foge de seus inimigos é um covarde!. Thank you for using my words in your work. Há males que vêm para o pior.. Evite acidentes. Faça de propósito..
-
-Como se escreve o número 0 em algarismos romanos?. Eu sem mim não existo.. Essas TVs de LSD são uma droga!. Como se escreve o número 0 em algarismos romanos?. A única mulher que andou na linha o trem pegou..
-
-Toda regra tem exceção.. Pobre só enche a barriga quando morre afogado.. Jesus salva! Que passa para Moisés, que chuta e é gooooolllll.... Se barba fosse respeito, bode não tinha chifre.. Há males que vêm para o pior..
-
-Há males que vêm para o pior.. Essas TVs de LSD são uma droga!. Na vida tudo é passageiro, menos o motorista e o cobrador…. You say potatoe, I say starchy carbs. Essas TVs de LSD são uma droga!.
-
-A vida é uma vai e vem que não tem volta.. O povo unido é gente pra caramba.. You say potatoe, I say starchy carbs. O dinheiro não traz felicidade, então, dê todo o seu pra mim e seja feliz.. Só não compro uma bicicleta porque não sei nadar..
+Informando alguns dados como idade, seu pesoa, o número de triglicerídeos no seu organismo, tempo evolutivo, a circuferência abdominal, renda e o grau de escolaridade, o aplicativo será capaz de entregar um resultado dizendo quais são os riscos da pessoa de desenvolver diabetes. 
 
 ---
 
@@ -135,34 +118,38 @@ A vida é uma vai e vem que não tem volta.. O povo unido é gente pra caramba..
 
 |nome |versão|
 |:---:|:----:|
-|ionic| v 2  |
-|outra| v 10 |
+|ionic| ^6.0.0  |
+|angular| ~13.2.2  |
+|firebase| ^9.8.1 |
 
 ---
 
 ## Legal
 
-The manufacturer of this software assumes no responsibility for the topicality, correctness, completeness or quality of the information provided. Liability claims against the manufacturer, which relate to material or immaterial nature, caused by the use or non-use of the software are excluded.
+O fabricante deste software não assume nenhuma responsabilidade pela atualidade, exatidão, integridade ou qualidade das informações fornecidas. Excluem-se as reclamações de responsabilidade contra o fabricante pelo uso ou não uso do software.
 
-#### Redistribution
+### Licença
 
-Additionally to the permissions, conditions and limitations of the GPLv3, the permission for redistribution must be manually requested in advance. This ensures that neither the original software or any fork will be affected negatively by terms and conditions like the [Google Play Developer Distribution Agreement](https://play.google.com/about/developer-distribution-agreement.html). If you plan to redistribute this software, please contact the maintainer at [diaguard.de@gmail.com](mailto:diaguard.de@gmail.com).
+```
+The MIT License (MIT)
 
-#### Licença
+Copyright (c) 2022-present Isabela Jesus
 
-    Copyright (C) 2013-2022 Philipp Fahlteich
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
